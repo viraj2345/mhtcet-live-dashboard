@@ -1,0 +1,13 @@
+{
+  "name": "mhtcet-cursor-scripts",
+  "private": true,
+  "type": "module",
+  "description": "Cursor SDK automation for MHT-CET Live Dashboard (dev/CI only)",
+  "scripts": {
+    "verify:local": "node verify-local.mjs",
+    "verify:prod": "node verify-production.mjs"
+  },
+  "dependencies": {
+    "@cursor/sdk": "^1.0.0"
+  }
+}

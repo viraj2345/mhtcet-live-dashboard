@@ -83,6 +83,22 @@ Respond in plain text (not JSON). Keep answers under 200 words. Be friendly and 
 Always cite cetcell.mahacet.org as the authoritative source.`;
       userContent = userMessage;
 
+    } else if (type === 'scorecard') {
+      systemPrompt = `You are an MHT-CET PCM 2026 scorecard analyst for Maharashtra students.
+Parse the student's scorecard details from the message and return ONLY valid JSON — no markdown.
+
+Return this shape:
+{
+  "physics": { "marks": <number>, "percentile": <number> },
+  "chemistry": { "marks": <number>, "percentile": <number> },
+  "mathematics": { "marks": <number>, "percentile": <number> },
+  "totalPercentile": <number>,
+  "approxRank": <number or null>,
+  "summary": "<2-3 sentence analysis>",
+  "nextSteps": ["...", "..."]
+}`;
+      userContent = userMessage;
+
     } else {
       return res.status(400).json({ error: 'Unknown request type' });
     }

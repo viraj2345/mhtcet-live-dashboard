@@ -3,13 +3,15 @@
 
 ### Project Structure
 ```
-mhtcet-live/
+projects/my-project/files/
 ├── api/
-│   └── chat.js          ← Serverless proxy (holds API key securely)
+│   └── chat.js          ← Serverless proxy (ANTHROPIC_API_KEY in env)
 ├── public/
-│   └── index.html       ← Main frontend dashboard
-├── vercel.json          ← Vercel configuration
+│   ├── index.html       ← Main dashboard
+│   └── scorecard.html   ← Scorecard calculator
+├── vercel.json
 ├── package.json
+├── .env.example
 └── README.md
 ```
 
@@ -39,10 +41,19 @@ git push -u origin main
 5. Click "Deploy"
 6. Done! Your URL: `https://your-app.vercel.app`
 
-### Step 4 — Configure Frontend
-In the deployed app, go to "Live Updates" tab:
-- Set Proxy URL to: `https://your-app.vercel.app/api/chat`
-- Click "Fetch Latest from CET Cell"
+### Step 4 — Configure Frontend (Proxy URL)
+
+In the deployed app, open the **Live Updates** tab:
+
+| Field | Local dev | Production |
+|-------|-----------|--------------|
+| **Proxy URL** | `/api/chat` (default) | `https://your-app.vercel.app/api/chat` |
+
+1. Enter the Proxy URL in the text field (id `proxyUrl` on the Live Updates page)
+2. Click **Fetch Latest from CET Cell**
+3. Requires `ANTHROPIC_API_KEY` set in Vercel env (or `files/.env` for `vercel dev`)
+
+All AI features (`live_updates`, `college_suggest`, `ask_cet`, `scorecard`) POST to this URL.
 
 ### Local Development
 ```bash
@@ -68,6 +79,18 @@ npx vercel dev
 - API key is stored as Vercel Environment Variable — NEVER in frontend code
 - CORS configured to allow all origins (restrict to your domain in production)
 - No user data is stored
+
+### Cursor API (dev automation — optional)
+
+For CI/agent smoke tests (not the student app):
+
+```bash
+cd ../scripts/cursor
+npm install
+CURSOR_API_KEY=cursor_... npm run verify:local
+```
+
+See `../scripts/cursor/README.md`. Student-facing AI uses **Anthropic** (`ANTHROPIC_API_KEY`), not Cursor.
 
 ### Official Sources Used
 - cetcell.mahacet.org (live fetching)
