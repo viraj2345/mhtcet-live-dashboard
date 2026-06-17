@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHT-CET 2026 PCM — Live Student Dashboard | cetcell.mahacet.org</title>
+<meta name="description" content="Live MHT-CET PCM 2026 Calculator with real-time CET Cell updates, AI college suggestions, normalization calculator. Based on cetcell.mahacet.org.">
+<style>
+/* ============================================================
+   DESIGN SYSTEM — Maharashtra Blue #1a4fba + Saffron #f47c20
+   ============================================================ */
+:root {
+  --pr:#1a4fba; --pd:#0f3080; --pl:#e8efff; --pl2:#d0dcff;
+  --ac:#f47c20; --ad:#c85e08; --al:#fff4eb;
+  --sc:#16a34a; --sl:#dcfce7;
+  --wc:#ca8a04; --wl:#fef9c3;
+  --su:#ffffff; --bg:#f0f4fc;
+  --tx:#1e2a3b; --tm:#5a6a82; --bd:#d0d9ee;
+  --r:12px; --rs:8px;
+  --tr:.2s cubic-bezier(.4,0,.2,1);
+}
+[data-theme=dark]{
+  --su:#1a2238; --bg:#111827; --tx:#e8edf7; --tm:#94a3b8;
+  --bd:#2d3c5c; --pl:#1e2f50; --al:#2a1a0a; --sl:#052e16; --wl:#1c1402;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI','Noto Sans',Arial,sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;transition:background var(--tr),color var(--tr);min-height:100vh}
+a{color:var(--pr)}
+
+/* TICKER */
+.ticker{background:var(--ac);color:#fff;padding:6px 0;overflow:hidden;position:relative}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2}
+.ticker::before{left:0;background:linear-gradient(to right,var(--ac),transparent)}
+.ticker::after{right:0;background:linear-gradient(to left,var(--ac),transparent)}
+.ticker-track{display:flex;width:max-content;animation:tick 40s linear infinite}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker span{white-space:nowrap;padding:0 32px;font-size:.78rem;font-weight:700}
+.ticker .live-dot{display:inline-block;width:8px;height:8px;background:#fff;border-radius:50%;margin-right:6px;animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
+/* HEADER */
+header{background:linear-gradient(135deg,var(--pd) 0%,var(--pr) 55%,#2563eb 100%);color:#fff;position:sticky;top:0;z-index:300;box-shadow:0 4px 20px rgba(26,79,186,.3)}
+.hi{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:10px;min-height:58px;padding:0 18px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;flex:1;text-decoration:none;color:#fff}
+.logo-icon{width:40px;height:40px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.logo-text strong{font-size:.95rem;display:block}
+.logo-text{font-size:.72rem;opacity:.85}
+.hactions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* NAV */
+nav{background:rgba(0,0,0,.15);backdrop-filter:blur(4px)}
+.navinner{max-width:1240px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 12px}
+.navinner::-webkit-scrollbar{display:none}
+.nt{padding:9px 13px;cursor:pointer;border:none;background:none;color:rgba(255,255,255,.7);font-size:.76rem;font-weight:700;border-bottom:3px solid transparent;white-space:nowrap;transition:all var(--tr)}
+.nt:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nt.active{color:#fff;border-color:var(--ac)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:var(--rs);font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:all var(--tr);text-decoration:none}
+.btn:hover{transform:translateY(-1px)}
+.bp{background:var(--ac);color:#fff}.bp:hover{background:var(--ad);box-shadow:0 4px 12px rgba(244,124,32,.35)}
+.bo{background:transparent;border:1.5px solid rgba(255,255,255,.4);color:#fff}.bo:hover{background:rgba(255,255,255,.12)}
+.bg2{background:var(--pl);color:var(--pr)}.bg2:hover{background:var(--pr);color:#fff}
+.bs{background:var(--sc);color:#fff}.bs:hover{background:#15803d}
+.bw{background:var(--wl);color:#713f12;border:1px solid var(--wc)}.bw:hover{background:#fde68a}
+.btn.sm{padding:5px 11px;font-size:.74rem}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* TOGGLE */
+.togwrap{display:flex;align-items:center;gap:5px;cursor:pointer}
+.tog{position:relative;width:36px;height:20px;background:rgba(255,255,255,.2);border-radius:10px;transition:background var(--tr);flex-shrink:0}
+.tog.on{background:var(--ac)}
+.tog::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:left var(--tr)}
+.tog.on::after{left:18px}
+.tog-lbl{font-size:.72rem;color:rgba(255,255,255,.85)}
+select.hsel{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:6px;padding:4px 8px;font-size:.74rem;cursor:pointer}
+select.hsel option{background:var(--pd);color:#fff}
+
+/* MAIN */
+main{max-width:1240px;margin:0 auto;padding:26px 18px 70px}
+
+/* CARDS */
+.card{background:var(--su);border-radius:var(--r);box-shadow:0 1px 4px rgba(26,79,186,.09);border:1px solid var(--bd);padding:22px;margin-bottom:18px;transition:box-shadow var(--tr)}
+.card:hover{box-shadow:0 4px 18px rgba(26,79,186,.13)}
+.card.accent{border-left:4px solid var(--ac)}
+.card.primary{border-left:4px solid var(--pr)}
+.card.success{border-left:4px solid var(--sc)}
+.ct{font-size:1.05rem;font-weight:800;color:var(--pr);margin-bottom:4px;display:flex;align-items:center;gap:7px}
+.cs{font-size:.8rem;color:var(--tm);margin-bottom:14px}
+.cg2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media(max-width:768px){.cg2,.cg3{grid-template-columns:1fr}}
+
+/* SECTION HEADER */
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--bd)}
+.snum{width:36px;height:36px;border-radius:50%;background:var(--pr);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem;flex-shrink:0}
+.stit{font-size:1.25rem;font-weight:800}
+.ssub{font-size:.79rem;color:var(--tm)}
+
+/* FORM */
+.fg{margin-bottom:14px}
+label{display:block;margin-bottom:5px;font-size:.82rem;font-weight:700}
+label .h{font-weight:400;color:var(--tm);margin-left:4px}
+input[type=number],input[type=text],textarea,select.inp{width:100%;padding:10px 13px;border:2px solid var(--bd);border-radius:var(--rs);font-size:.94rem;background:var(--su);color:var(--tx);transition:border-color var(--tr),box-shadow var(--tr);-moz-appearance:textfield}
+input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{-webkit-appearance:none}
+input:focus,textarea:focus,select.inp:focus{outline:none;border-color:var(--pr);box-shadow:0 0 0 3px rgba(26,79,186,.15)}
+input.err{border-color:#ef4444}
+.em{font-size:.74rem;color:#ef4444;margin-top:3px;display:none}
+.em.show{display:block}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;background:var(--bd);border-radius:3px;outline:none;border:none;cursor:pointer;margin-top:6px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--pr);cursor:pointer;box-shadow:0 2px 5px rgba(26,79,186,.4)}
+
+/* RESULT BOX */
+.rb{background:linear-gradient(135deg,var(--pr) 0%,#2563eb 100%);color:#fff;border-radius:var(--r);padding:20px;margin-top:18px;display:none}
+.rb.show{display:block;animation:fi .35s ease}
+.rb h3{font-size:.95rem;opacity:.85;margin-bottom:12px}
+.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.ri{background:rgba(255,255,255,.12);border-radius:var(--rs);padding:11px;text-align:center}
+.ri .v{font-size:1.7rem;font-weight:900;display:block;line-height:1}
+.ri .l{font-size:.7rem;opacity:.8;margin-top:3px}
+.ra{background:rgba(244,124,32,.25);border:1px solid rgba(244,124,32,.5)}
+.rm{margin-top:12px;background:rgba(255,255,255,.1);border-radius:var(--rs);padding:9px 13px;font-size:.85rem}
+.pw{margin-top:12px}
+.pl2{display:flex;justify-content:space-between;font-size:.75rem;opacity:.85;margin-bottom:4px}
+.pb{height:8px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden}
+.pf{height:100%;background:var(--ac);border-radius:4px;transition:width .9s ease;width:0}
+
+/* NOTICE */
+.n{border-radius:var(--rs);padding:10px 14px;margin:10px 0;font-size:.82rem;line-height:1.5}
+.ni{background:var(--pl);border-left:4px solid var(--pr);color:var(--pd)}
+.nw{background:var(--wl);border-left:4px solid var(--wc);color:#713f12}
+.ns{background:var(--sl);border-left:4px solid var(--sc);color:#14532d}
+.ne{background:#fee2e2;border-left:4px solid #ef4444;color:#7f1d1d}
+[data-theme=dark] .ni{color:#93c5fd}[data-theme=dark] .nw{color:#fde68a}
+[data-theme=dark] .ns{color:#86efac}[data-theme=dark] .ne{color:#fca5a5}
+
+/* FORMULA */
+.fb{background:var(--pd);color:#93c5fd;border-radius:var(--rs);padding:12px 16px;margin:10px 0;font-family:'Courier New',monospace;font-size:.85rem;border-left:4px solid var(--ac);overflow-x:auto}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{background:var(--pr);color:#fff;padding:10px 13px;text-align:left;font-size:.82rem}
+.tbl td{padding:9px 13px;border-bottom:1px solid var(--bd);font-size:.82rem}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:nth-child(even) td{background:var(--pl)}
+.tbl tr:hover td{background:var(--pl2)}
+
+/* ACCORDION */
+.ai{border:1.5px solid var(--bd);border-radius:var(--rs);margin-bottom:8px;overflow:hidden}
+.ab{width:100%;padding:12px 16px;background:var(--su);border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:.86rem;font-weight:700;color:var(--tx);transition:background var(--tr);text-align:left}
+.ab:hover{background:var(--pl)}.ab.open{background:var(--pl)}
+.ab .ar{transition:transform var(--tr)}.ab.open .ar{transform:rotate(180deg)}
+.ac2{display:none;padding:14px 16px;border-top:1px solid var(--bd)}
+.ac2.open{display:block;animation:fi .2s ease}
+
+/* BADGE */
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:.71rem;font-weight:800}
+.gold{background:#fbbf24;color:#78350f}
+.blue{background:var(--pr);color:#fff}
+.green{background:var(--sc);color:#fff}
+.gray{background:var(--bd);color:var(--tx)}
+.orange{background:var(--ac);color:#fff}
+
+/* EXAMPLE BOX */
+.ex{background:var(--al);border:1.5px dashed var(--ac);border-radius:var(--rs);padding:13px;margin-top:14px}
+.ex h4{color:var(--ad);font-size:.85rem;margin-bottom:7px}
+.ex table{width:100%;border-collapse:collapse}
+.ex td{padding:4px 7px;font-size:.83rem}
+.ex td:first-child{color:var(--tm);font-weight:600}
+.ex td:last-child{font-weight:700;text-align:right}
+.hl{color:var(--ad)}
+
+/* STAT CARDS */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin:14px 0}
+.stat{background:var(--su);border-radius:var(--r);padding:14px;text-align:center;border:1px solid var(--bd);border-top:3px solid var(--pr)}
+.stat.ac-top{border-top-color:var(--ac)}
+.stat.gr-top{border-top-color:var(--sc)}
+.stat .sv{font-size:1.5rem;font-weight:900;color:var(--pr)}
+.stat.ac-top .sv{color:var(--ac)}
+.stat.gr-top .sv{color:var(--sc)}
+.stat .sl2{font-size:.72rem;color:var(--tm);margin-top:3px}
+
+/* BANNER */
+.banner{background:linear-gradient(120deg,var(--pd) 0%,var(--pr) 55%,#2563eb 100%);color:#fff;padding:18px 20px;border-radius:var(--r);display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.bseal{font-size:2.6rem}
+.btxt h2{font-size:1rem;font-weight:800}
+.btxt p{font-size:.76rem;opacity:.85;margin-top:2px}
+.blinks{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.bla{padding:6px 12px;border-radius:6px;font-size:.74rem;font-weight:700;text-decoration:none;transition:all var(--tr)}
+.bla-ac{background:var(--ac);color:#fff}.bla-ac:hover{background:var(--ad)}
+.bla-ol{border:1.5px solid rgba(255,255,255,.4);color:#fff}.bla-ol:hover{background:rgba(255,255,255,.1)}
+
+/* TIMELINE */
+.timeline{list-style:none;padding:0;position:relative}
+.timeline::before{content:'';position:absolute;left:15px;top:0;bottom:0;width:2px;background:var(--bd)}
+.tli{padding-left:40px;position:relative;margin-bottom:14px}
+.tldot{position:absolute;left:7px;top:3px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:900}
+.done{background:var(--sc);color:#fff}
+.curr{background:var(--ac);color:#fff;box-shadow:0 0 0 4px rgba(244,124,32,.2)}
+.upco{background:var(--bd);color:var(--tx)}
+.tltit{font-weight:700;font-size:.86rem}
+.tldate{font-size:.75rem;color:var(--tm)}
+.tldesc{font-size:.8rem;margin-top:2px}
+
+/* LIVE UPDATE PANEL */
+.live-panel{background:var(--su);border:2px solid var(--ac);border-radius:var(--r);padding:20px;margin-bottom:20px}
+.live-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.live-badge{background:var(--ac);color:#fff;padding:3px 10px;border-radius:20px;font-size:.73rem;font-weight:800;display:flex;align-items:center;gap:5px}
+.live-title{font-size:1rem;font-weight:800;color:var(--pr);flex:1}
+.live-timestamp{font-size:.74rem;color:var(--tm)}
+.notif-list{list-style:none;padding:0}
+.notif-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd);align-items:flex-start;font-size:.83rem}
+.notif-item:last-child{border-bottom:none}
+.notif-date{background:var(--pl);color:var(--pr);padding:2px 8px;border-radius:5px;font-size:.72rem;font-weight:700;white-space:nowrap;flex-shrink:0}
+.notif-text a{color:var(--pr);font-weight:600}
+
+/* AI CHAT */
+.chat-box{background:var(--su);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.chat-msgs{height:300px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.msg{padding:10px 13px;border-radius:var(--rs);max-width:85%;font-size:.84rem;line-height:1.5}
+.msg.user{background:var(--pr);color:#fff;align-self:flex-end;border-bottom-right-radius:2px}
+.msg.bot{background:var(--pl);color:var(--tx);align-self:flex-start;border-bottom-left-radius:2px}
+.msg.loading{opacity:.6;font-style:italic}
+.chat-input-area{display:flex;gap:8px;padding:12px;border-top:1px solid var(--bd);background:var(--bg)}
+.chat-input-area input{flex:1;padding:9px 13px;border:2px solid var(--bd);border-radius:var(--rs);font-size:.85rem;background:var(--su);color:var(--tx)}
+.chat-input-area input:focus{outline:none;border-color:var(--pr)}
+
+/* COLLEGE CARDS */
+.clg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:13px;margin-top:14px}
+.clg-card{background:var(--su);border:1px solid var(--bd);border-radius:var(--r);padding:15px;border-left:4px solid var(--pr);transition:all var(--tr)}
+.clg-card:hover{box-shadow:0 4px 16px rgba(26,79,186,.14);transform:translateY(-2px)}
+.clg-card.gold{border-left-color:#f59e0b}
+.clg-card.green{border-left-color:var(--sc)}
+.clg-card.gray{border-left-color:var(--tm)}
+.clg-name{font-weight:800;font-size:.9rem}
+.clg-info{font-size:.76rem;color:var(--tm);margin-top:3px}
+.clg-cut{display:inline-block;margin-top:6px;padding:2px 9px;border-radius:20px;font-size:.72rem;font-weight:700;background:var(--pl);color:var(--pr)}
+
+/* SCORE BARS */
+.sbar{display:flex;align-items:center;gap:9px;margin:5px 0}
+.sbar-lbl{font-size:.76rem;font-weight:700;width:75px;flex-shrink:0}
+.sbar-track{flex:1;height:7px;background:var(--bd);border-radius:3px;overflow:hidden}
+.sbar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+.sbar-val{font-size:.76rem;font-weight:700;width:38px;text-align:right;flex-shrink:0}
+
+/* COURSE SUGGEST CARDS */
+.sug-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:11px;margin-top:13px}
+.sug-card{background:var(--su);border:1px solid var(--bd);border-radius:var(--r);padding:13px;transition:all var(--tr)}
+.sug-card:hover{border-color:var(--pr);transform:translateY(-2px);box-shadow:0 4px 14px rgba(26,79,186,.13)}
+.sug-icon{font-size:1.8rem;margin-bottom:6px}
+.sug-title{font-weight:800;font-size:.87rem;color:var(--pr)}
+.sug-desc{font-size:.75rem;color:var(--tm);margin-top:4px}
+
+/* VS COMPARE */
+.vs-wrap{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:12px 0}
+.vsc{background:var(--pl);border-radius:var(--rs);padding:13px;text-align:center}
+.vsc.win{background:var(--sl);border:2px solid var(--sc)}
+.vsc .sname{font-weight:800;font-size:.9rem}
+.vsc .srow{display:flex;justify-content:space-between;font-size:.78rem;margin-top:5px}
+.vs-dot{background:var(--ac);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.78rem;flex-shrink:0}
+
+/* TOOLTIP */
+.tw{position:relative;display:inline-block}
+.ti{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;background:var(--pr);color:#fff;border-radius:50%;font-size:.66rem;font-weight:900;cursor:help;margin-left:4px;vertical-align:middle}
+.tb2{display:none;position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:#1e2a3b;color:#e8edf7;padding:7px 11px;border-radius:7px;font-size:.74rem;width:180px;z-index:99;box-shadow:0 4px 14px rgba(0,0,0,.3);text-align:center;pointer-events:none;line-height:1.4}
+.tw:hover .tb2{display:block}
+
+/* PAGES */
+.page{display:none}
+.page.active{display:block;animation:fi .3s ease}
+
+/* LOADER */
+.loader{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-left:6px}
+.loader.dark{border-color:rgba(26,79,186,.2);border-top-color:var(--pr)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* CLASSROOM */
+.clroom{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;margin:12px 0}
+.dot{width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:700}
+.dl{background:#bfdbfe;color:#1d4ed8}.dh{background:var(--ac);color:#fff;width:29px;height:29px;font-size:.63rem}.da{background:#fca5a5;color:#991b1b}
+
+/* MARATHI */
+.mc{background:linear-gradient(135deg,#fff7ed,#fef3c7);border:2px solid var(--ac)}
+[data-theme=dark] .mc{background:linear-gradient(135deg,#2a1a0a,#1c1402)}
+.deva{font-family:'Noto Sans Devanagari','Mangal',sans-serif}
+
+/* ABAR */
+.abar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+/* FOOTER */
+footer{background:var(--pd);color:rgba(255,255,255,.7);padding:20px;text-align:center;font-size:.78rem}
+footer a{color:rgba(255,255,255,.9)}
+footer p+p{margin-top:5px}
+
+/* PRINT */
+@media print{header,nav,.abar,footer,.ticker,.live-panel,.chat-box{display:none!important}body{background:#fff;color:#000}.card{box-shadow:none;border:1px solid #ccc}main{padding:0;max-width:100%}}
+
+/* RESPONSIVE */
+@media(max-width:768px){main{padding:16px 12px 50px}.banner{flex-direction:column;gap:10px}.blinks{margin-left:0}.vs-wrap{grid-template-columns:1fr}.vs-dot{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ TICKER ═══════════════════ -->
+<div class="ticker" id="tickerBar">
+  <div class="ticker-track" id="tickerTrack">
+    <span><span class="live-dot"></span>🔴 LIVE</span>
+    <span>✅ MHT-CET PCM 2026 (1st Attempt) Result DECLARED – 15 Jun 2026</span>
+    <span>📊 4,79,332 Registered · 4,54,069 Appeared · 26 scored 100 Percentile</span>
+    <span>⏳ PCM 2nd Attempt Objection Redressal in progress</span>
+    <span>📋 CAP 2026-27 Schedule expected soon – portal-2026.maharashtracet.org</span>
+    <span>🎓 Score cards available at candidate login on CET Portal</span>
+    <span><span class="live-dot"></span>🔴 LIVE</span>
+    <span>✅ MHT-CET PCM 2026 (1st Attempt) Result DECLARED – 15 Jun 2026</span>
+    <span>📊 4,79,332 Registered · 4,54,069 Appeared · 26 scored 100 Percentile</span>
+    <span>⏳ PCM 2nd Attempt Objection Redressal in progress</span>
+    <span>📋 CAP 2026-27 Schedule expected soon – portal-2026.maharashtracet.org</span>
+    <span>🎓 Score cards available at candidate login on CET Portal</span>
+  </div>
+</div>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header>
+  <div class="hi">
+    <a href="#" class="logo" onclick="pg('home',document.querySelector('.nt'));return false">
+      <div class="logo-icon">🎓</div>
+      <div class="logo-text">
+        <strong>MHT-CET PCM 2026 — Live Student Dashboard</strong>
+        State CET Cell, Maharashtra | cetcell.mahacet.org
+      </div>
+    </a>
+    <div class="hactions">
+      <div class="togwrap" onclick="toggleDark()">
+        <div class="tog" id="dkT"></div>
+        <span class="tog-lbl" id="dkL">Dark</span>
+      </div>
+      <select class="hsel" onchange="switchLang(this.value)">
+        <option value="en">🇮🇳 English</option>
+        <option value="mr">🇮🇳 मराठी</option>
+      </select>
+      <button class="btn bo sm" onclick="window.print()">🖨 Print</button>
+    </div>
+  </div>
+  <nav>
+    <div class="navinner">
+      <button class="nt active" onclick="pg('home',this)">🏠 Home</button>
+      <button class="nt" onclick="pg('live',this)">🔴 Live Updates</button>
+      <button class="nt" onclick="pg('pct',this)">📊 Percentage</button>
+      <button class="nt" onclick="pg('per',this)">📈 Percentile</button>
+      <button class="nt" onclick="pg('norm',this)">⚙️ Normalization</button>
+      <button class="nt" onclick="pg('rank',this)">🏅 Rank</button>
+      <button class="nt" onclick="pg('suggest',this)">🎯 Course Finder</button>
+      <button class="nt" onclick="pg('colleges',this)">🏫 Colleges</button>
+      <button class="nt" onclick="pg('tiebreak',this)">🔗 Tie-Breaking</button>
+      <button class="nt" onclick="pg('compare',this)">⚖️ Compare</button>
+      <button class="nt" onclick="pg('dates',this)">📅 Dates</button>
+      <button class="nt" onclick="pg('stats',this)">📋 Stats 2026</button>
+      <button class="nt" onclick="pg('chatbot',this)">🤖 Ask AI</button>
+      <a href="scorecard.html" class="nt" style="text-decoration:none;color:rgba(255,255,255,.7)" target="_blank">📋 Scorecard Calc</a>
+      <button class="nt" onclick="pg('marathi',this)">मराठी</button>
+      <button class="nt" onclick="pg('quickref',this)">⚡ Quick Ref</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+<!-- ═══════════════════ HOME ═══════════════════ -->
+<div class="page active" id="page-home">
+  <div class="banner">
+    <div class="bseal">🏛️</div>
+    <div class="btxt">
+      <h2>State Common Entrance Test Cell, Maharashtra Government</h2>
+      <p>MHT-CET PCM 2026 (1st Attempt) Result Declared · 4,54,069 appeared · 26 scored 100 Percentile · CAP 2026-27 coming soon</p>
+    </div>
+    <div class="blinks">
+      <a href="https://portal-2026.maharashtracet.org/" target="_blank" class="bla bla-ac">CET Portal ↗</a>
+      <a href="https://cetcell.mahacet.org/" target="_blank" class="bla bla-ol">cetcell.mahacet.org ↗</a>
+    </div>
+  </div>
+
+  <div class="n ns">📢 <strong>16 Jun 2026:</strong> PCM 1st Attempt result declared. All 26 toppers scored 100 percentile. PCM 2nd Attempt objection redressal ongoing. CAP schedule expected soon. <strong><a href="#" onclick="pg('live',document.querySelectorAll('.nt')[1]);return false">→ Get live updates from CET Cell</a></strong></div>
+
+  <div class="stats">
+    <div class="stat"><div class="sv">4,79,332</div><div class="sl2">Registered</div></div>
+    <div class="stat ac-top"><div class="sv">4,54,069</div><div class="sl2">Appeared (94.73%)</div></div>
+    <div class="stat gr-top"><div class="sv">26</div><div class="sl2">100 Percentile</div></div>
+    <div class="stat"><div class="sv">16</div><div class="sl2">Exam Sessions</div></div>
+    <div class="stat"><div class="sv">200</div><div class="sl2">Total PCM Marks</div></div>
+    <div class="stat ac-top"><div class="sv">2</div><div class="sl2">Attempts (Best used)</div></div>
+  </div>
+
+  <!-- Feature grid -->
+  <div class="cg3" style="margin-top:4px">
+    <div class="card accent" style="cursor:pointer" onclick="pg('live',document.querySelectorAll('.nt')[1])">
+      <div class="ct">🔴 Live CET Cell Updates</div>
+      <p style="font-size:.83rem;color:var(--tm)">AI fetches cetcell.mahacet.org in real time — latest notifications, results, CAP dates.</p>
+      <div class="abar" style="margin-top:10px"><span class="badge orange">NEW</span><span style="font-size:.75rem;color:var(--tm);margin-left:6px">Powered by Claude AI</span></div>
+    </div>
+    <div class="card primary" style="cursor:pointer" onclick="pg('pct',document.querySelectorAll('.nt')[2])">
+      <div class="ct">📊 Percentage Calculator</div>
+      <p style="font-size:.83rem;color:var(--tm)">Physics (50) + Chemistry (50) + Maths (100) → Your PCM percentage out of 200.</p>
+      <div class="fb" style="font-size:.76rem;margin-top:10px">% = (Total / 200) × 100</div>
+    </div>
+    <div class="card" style="cursor:pointer;border-left:4px solid #8b5cf6" onclick="pg('norm',document.querySelectorAll('.nt')[4])">
+      <div class="ct">⚙️ Normalization Calculator</div>
+      <p style="font-size:.83rem;color:var(--tm)">Simulate how CET Cell converts your raw marks to percentile across 16 sessions.</p>
+    </div>
+    <div class="card success" style="cursor:pointer" onclick="pg('suggest',document.querySelectorAll('.nt')[6])">
+      <div class="ct">🎯 AI Course Finder</div>
+      <p style="font-size:.83rem;color:var(--tm)">Enter percentile + category + interest → get personalized college & course suggestions.</p>
+    </div>
+    <div class="card" style="cursor:pointer;border-left:4px solid var(--wc)" onclick="pg('dates',document.querySelectorAll('.nt')[10])">
+      <div class="ct">📅 Important Dates</div>
+      <p style="font-size:.83rem;color:var(--tm)">PCM result, 2nd attempt, CAP registration — full 2026-27 timeline in one place.</p>
+    </div>
+    <div class="card" style="cursor:pointer;border-left:4px solid #ec4899" onclick="pg('chatbot',document.querySelectorAll('.nt')[12])">
+      <div class="ct">🤖 Ask AI Anything</div>
+      <p style="font-size:.83rem;color:var(--tm)">Ask any MHT-CET question in English or Marathi — AI answers using live CET data.</p>
+      <div class="abar" style="margin-top:10px"><span class="badge orange">LIVE</span><span style="font-size:.75rem;color:var(--tm);margin-left:6px">Connected to cetcell.mahacet.org</span></div>
+    </div>
+  </div>
+
+  <!-- Exam Pattern -->
+  <div class="card" style="margin-top:4px">
+    <div class="ct">ℹ️ MHT-CET PCM 2026 — Official Exam Pattern</div>
+    <div class="cg2" style="margin-top:12px">
+      <table class="tbl">
+        <thead><tr><th>Subject</th><th>Questions</th><th>Marks/Q</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Physics</td><td>50</td><td>1</td><td>50</td></tr>
+          <tr><td>Chemistry</td><td>50</td><td>1</td><td>50</td></tr>
+          <tr><td>Mathematics</td><td>50</td><td>2</td><td>100</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>150 MCQs</strong></td><td>—</td><td><strong style="color:var(--pr)">200</strong></td></tr>
+        </tbody>
+      </table>
+      <div>
+        <div class="n ni">📐 <strong>No Negative Marking.</strong> Maths carries 2 marks per question — double weightage. Normalization applied across all 16 sessions.</div>
+        <div class="n ns" style="margin-top:8px">✅ <strong>Two attempts:</strong> Best percentile of Attempt 1 or 2 is used for CAP merit list.</div>
+        <div class="n nw" style="margin-top:8px">⚠️ Percentage ≠ Percentile. CAP uses <strong>Percentile</strong> only. Two students with same % can have very different percentiles.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ LIVE UPDATES ═══════════════════ -->
+<div class="page" id="page-live">
+  <div class="sh"><div class="snum">🔴</div><div><div class="stit">Live CET Cell Updates</div><div class="ssub">AI fetches cetcell.mahacet.org in real time — no stale data</div></div></div>
+
+  <div class="n ni">🤖 <strong>How this works:</strong> Clicking "Fetch Now" sends a request to your proxy server → Claude AI visits cetcell.mahacet.org → extracts latest notifications → displayed here. Data is fresh every time you click.</div>
+
+  <!-- API Config -->
+  <div class="card accent" id="apiConfigCard">
+    <div class="ct">⚙️ API Configuration</div>
+    <div class="cs">Enter your proxy server URL. On localhost use the default. On Vercel use your deployment URL.</div>
+    <div class="fg">
+      <label>Proxy Server URL</label>
+      <input type="text" id="proxyUrl" value="/api/chat" placeholder="https://your-app.vercel.app/api/chat">
+    </div>
+    <div class="abar">
+      <button class="btn bp" id="fetchBtn" onclick="fetchLiveUpdates()">🔄 Fetch Latest from CET Cell</button>
+      <button class="btn bg2 sm" onclick="document.getElementById('apiConfigCard').style.display='none'">Hide Config</button>
+    </div>
+  </div>
+
+  <!-- Live panel -->
+  <div class="live-panel" id="livePanel" style="display:none">
+    <div class="live-header">
+      <div class="live-badge"><span class="live-dot" style="background:#fff;width:7px;height:7px;display:inline-block;border-radius:50%;animation:pulse 1.2s infinite"></span> LIVE</div>
+      <div class="live-title">Latest from cetcell.mahacet.org</div>
+      <div class="live-timestamp" id="liveTime"></div>
+      <button class="btn bg2 sm" onclick="fetchLiveUpdates()">🔄 Refresh</button>
+    </div>
+    <ul class="notif-list" id="notifList"></ul>
+  </div>
+
+  <!-- Announcements -->
+  <div class="cg2" id="liveExtra" style="display:none">
+    <div class="card">
+      <div class="ct">📢 Important Announcements</div>
+      <ul id="announceList" style="list-style:none;padding:0;font-size:.83rem"></ul>
+    </div>
+    <div class="card">
+      <div class="ct">⏳ Upcoming Events</div>
+      <ul id="upcomingList" style="list-style:none;padding:0;font-size:.83rem"></ul>
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  <div id="liveLoader" style="display:none;text-align:center;padding:40px">
+    <div class="loader dark"></div>
+    <p style="margin-top:14px;color:var(--tm);font-size:.85rem">Fetching latest data from cetcell.mahacet.org…<br><small>Claude AI is reading the CET Cell website right now</small></p>
+  </div>
+
+  <!-- Error state -->
+  <div class="n ne" id="liveError" style="display:none"></div>
+
+  <!-- Static fallback always shown -->
+  <div class="card" style="margin-top:4px">
+    <div class="ct">📋 Latest Known Notifications (Static Backup — as of 16 Jun 2026)</div>
+    <table class="tbl" style="margin-top:10px">
+      <thead><tr><th>Date</th><th>Course</th><th>Notification</th></tr></thead>
+      <tbody>
+        <tr><td>16/06/2026</td><td>MHT-CET PCM</td><td><a href="https://cetcell.mahacet.org/wp-content/uploads/2026/06/Press-Note-MHT-CET-PCM-Group-1st-Attempt_-2026.pdf" target="_blank">Result Summary PDF ↗</a></td></tr>
+        <tr><td>15/06/2026</td><td>MHT-CET PCM</td><td><a href="https://portal-2026.maharashtracet.org/" target="_blank">Result Declared (1st Attempt) — Score card at login ↗</a></td></tr>
+        <tr><td>15/06/2026</td><td>BED-MED, MED</td><td><a href="https://cetcell.mahacet.org/wp-content/uploads/2026/06/CAP-Reg-Notice_2026-BED-MED-and-MED.pdf" target="_blank">CAP Registration Schedule ↗</a></td></tr>
+        <tr><td>13/06/2026</td><td>BED CET</td><td><a href="https://portal-2026.maharashtracet.org/" target="_blank">Result Declared ↗</a></td></tr>
+        <tr><td>12/06/2026</td><td>MBA/MMS & B.Design</td><td><a href="https://portal-2026.maharashtracet.org/" target="_blank">Result Declared ↗</a></td></tr>
+        <tr><td>09/06/2026</td><td>MHT-CET PCB</td><td><a href="https://cetcell.mahacet.org/wp-content/uploads/2026/06/Notification_PCB_1st-Attempt-Result.pdf" target="_blank">PCB Result Summary ↗</a></td></tr>
+        <tr><td>16/06/2026</td><td>LLB 5 Yrs.</td><td><a href="https://portal-2026.maharashtracet.org/" target="_blank">Result Declared ↗</a></td></tr>
+      </tbody>
+    </table>
+    <div class="n nw" style="margin-top:10px;font-size:.79rem">↑ This table is static. Click "Fetch Latest from CET Cell" above to get truly live data via AI.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PERCENTAGE ═══════════════════ -->
+<div class="page" id="page-pct">
+  <div class="sh"><div class="snum">1</div><div><div class="stit">Percentage Calculator</div><div class="ssub">Official MHT-CET PCM marking scheme | cetcell.mahacet.org</div></div></div>
+  <div class="cg2">
+    <div class="card">
+      <div class="ct">🧮 Enter Your Marks</div>
+      <div class="cs">No negative marking. Maths carries 2 marks per question.</div>
+      <div class="fg">
+        <label>Physics <span class="h">(0–50)</span> <span class="tw"><span class="ti">?</span><span class="tb2">50 MCQs × 1 mark. Class 11 & 12 Maharashtra Board Physics syllabus.</span></span></label>
+        <input type="number" id="p1" min="0" max="50" placeholder="e.g. 40" oninput="syncR('p1','ps1',50);calcPct()">
+        <div class="em" id="p1e">Must be 0–50</div>
+        <input type="range" id="ps1" min="0" max="50" value="0" oninput="document.getElementById('p1').value=this.value;calcPct()">
+      </div>
+      <div class="fg">
+        <label>Chemistry <span class="h">(0–50)</span></label>
+        <input type="number" id="p2" min="0" max="50" placeholder="e.g. 35" oninput="syncR('p2','ps2',50);calcPct()">
+        <div class="em" id="p2e">Must be 0–50</div>
+        <input type="range" id="ps2" min="0" max="50" value="0" oninput="document.getElementById('p2').value=this.value;calcPct()">
+      </div>
+      <div class="fg">
+        <label>Mathematics <span class="h">(0–100)</span> <span class="tw"><span class="ti">?</span><span class="tb2">50 MCQs × 2 marks each. Carries double weightage — also first tiebreaker.</span></span></label>
+        <input type="number" id="p3" min="0" max="100" placeholder="e.g. 80" oninput="syncR('p3','ps3',100);calcPct()">
+        <div class="em" id="p3e">Must be 0–100</div>
+        <input type="range" id="ps3" min="0" max="100" value="0" oninput="document.getElementById('p3').value=this.value;calcPct()">
+      </div>
+      <div class="abar">
+        <button class="btn bp" onclick="calcPct()">Calculate ⚡</button>
+        <button class="btn bg2" onclick="resetPct()">Reset</button>
+        <button class="btn bg2 sm" onclick="fillEg('pct')">📖 Example</button>
+        <button class="btn bg2 sm" onclick="copyTxt('pctR')">📋 Copy</button>
+      </div>
+      <div class="rb" id="pctR">
+        <h3>📊 Your PCM Result</h3>
+        <div class="rg">
+          <div class="ri"><span class="v" id="rv1">—</span><div class="l">Physics/50</div></div>
+          <div class="ri"><span class="v" id="rv2">—</span><div class="l">Chemistry/50</div></div>
+          <div class="ri"><span class="v" id="rv3">—</span><div class="l">Maths/100</div></div>
+          <div class="ri"><span class="v" id="rv4">—</span><div class="l">Total/200</div></div>
+          <div class="ri ra" style="grid-column:span 2"><span class="v" id="rv5">—</span><div class="l">Percentage</div></div>
+        </div>
+        <div class="pw"><div class="pl2"><span>0%</span><span id="rvp">0%</span><span>100%</span></div><div class="pb"><div class="pf" id="pctF"></div></div></div>
+        <div style="margin-top:10px">
+          <div class="sbar"><div class="sbar-lbl">Physics</div><div class="sbar-track"><div class="sbar-fill" id="sf1" style="background:#60a5fa"></div></div><div class="sbar-val" id="sv1"></div></div>
+          <div class="sbar"><div class="sbar-lbl">Chemistry</div><div class="sbar-track"><div class="sbar-fill" id="sf2" style="background:#34d399"></div></div><div class="sbar-val" id="sv2"></div></div>
+          <div class="sbar"><div class="sbar-lbl">Maths</div><div class="sbar-track"><div class="sbar-fill" id="sf3" style="background:var(--ac)"></div></div><div class="sbar-val" id="sv3"></div></div>
+        </div>
+        <div class="rm" id="pctMsg"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="ct">📐 Formula</div>
+        <div class="fb">Total = Phy + Chem + Maths<br>Percentage = (Total ÷ 200) × 100</div>
+        <div class="n ni">⚠️ MHT-CET CAP merit list uses <strong>Percentile</strong>, not Percentage. Two students with same % can have very different percentiles.</div>
+        <a href="https://cetcell.mahacet.org/syllabus-and-marking-scheme/" target="_blank" style="font-size:.79rem;display:block;margin-top:8px">📚 Official Syllabus & Marking Scheme ↗</a>
+      </div>
+      <div class="ex">
+        <h4>📖 Worked Example</h4>
+        <table><tr><td>Physics</td><td class="hl">40/50</td></tr><tr><td>Chemistry</td><td class="hl">35/50</td></tr><tr><td>Mathematics</td><td class="hl">80/100</td></tr><tr><td style="border-top:1px solid var(--ac);font-weight:800">Total</td><td class="hl" style="border-top:1px solid var(--ac)">155/200</td></tr><tr><td style="font-weight:900;font-size:1rem;color:var(--ad)">Percentage</td><td class="hl" style="font-size:1.1rem">77.5%</td></tr></table>
+        <button class="btn bg2 sm" style="margin-top:8px" onclick="fillEg('pct')">Try ▶</button>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="ct">🎖️ Grade Reference</div>
+        <table class="tbl" style="margin-top:8px">
+          <thead><tr><th>Percentage</th><th>Remarks</th></tr></thead>
+          <tbody>
+            <tr><td>95–100%</td><td>🌟 Exceptional</td></tr>
+            <tr><td>85–94.99%</td><td>⭐ Excellent</td></tr>
+            <tr><td>75–84.99%</td><td>✅ Good</td></tr>
+            <tr><td>60–74.99%</td><td>👍 Average</td></tr>
+            <tr><td>&lt;60%</td><td>📚 Needs Improvement</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PERCENTILE ═══════════════════ -->
+<div class="page" id="page-per">
+  <div class="sh"><div class="snum">2</div><div><div class="stit">Percentile Calculator</div><div class="ssub">Official formula — 7 decimal places as shown on your CET scorecard</div></div></div>
+  <div class="cg2">
+    <div class="card">
+      <div class="ct">📈 Calculate Percentile</div>
+      <div class="fg">
+        <label>Total Appeared (N) <span class="tw"><span class="ti">?</span><span class="tb2">PCM 1st Attempt 2026: 4,54,069. For 2nd attempt combined, different figure used.</span></span></label>
+        <input type="number" id="q1" min="1" placeholder="e.g. 454069" oninput="calcPer()">
+        <div class="em" id="q1e">Enter valid number > 0</div>
+        <div class="n ni" style="font-size:.75rem;margin-top:5px">💡 PCM 1st Attempt 2026: N = <strong>4,54,069</strong></div>
+      </div>
+      <div class="fg">
+        <label>Your Rank</label>
+        <input type="number" id="q2" min="1" placeholder="e.g. 5001" oninput="calcPer()">
+        <div class="em" id="q2e">Rank must be 1 to N</div>
+      </div>
+      <div class="abar">
+        <button class="btn bp" onclick="calcPer()">Calculate ⚡</button>
+        <button class="btn bg2 sm" onclick="fillEg('per')">📖 Example</button>
+        <button class="btn bg2 sm" onclick="copyTxt('perR')">📋 Copy</button>
+      </div>
+      <div class="rb" id="perR">
+        <h3>📈 Percentile Score</h3>
+        <div class="rg">
+          <div class="ri"><span class="v" id="qv1">—</span><div class="l">Total Students</div></div>
+          <div class="ri"><span class="v" id="qv2">—</span><div class="l">Your Rank</div></div>
+          <div class="ri ra" style="grid-column:span 2"><span class="v" id="qv3">—</span><div class="l">Percentile (7 decimals)</div></div>
+        </div>
+        <div class="pw"><div class="pl2"><span>0</span><span id="qvp">0</span><span>100</span></div><div class="pb"><div class="pf" id="perF"></div></div></div>
+        <div class="rm" id="perMsg"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="ct">📐 Official CET Cell Formula</div>
+        <div class="fb">Percentile = ((N − Rank + 1) / N) × 100<br><br>N = Total appeared in your session group<br>Result rounded to 7 decimal places</div>
+        <div class="n ns">📋 This is the <strong>exact official formula</strong> from the MHT-CET 2026 Normalization Document. Topper of each session scores exactly 100.0000000.</div>
+        <a href="https://cetcell.mahacet.org/wp-content/uploads/2023/12/MHT-CET-2026-Result-Processing-Methodology.pdf" target="_blank" style="font-size:.79rem;display:block;margin-top:8px">📄 Official Normalization PDF ↗</a>
+      </div>
+      <div class="ex" style="margin-top:14px">
+        <h4>📖 From Official Document (Session 1)</h4>
+        <table>
+          <tr><td>Session 1 appeared</td><td class="hl">2,249</td></tr>
+          <tr><td>Topper percentile</td><td class="hl">(2249/2249)×100 = <strong>100.0000000</strong></td></tr>
+          <tr><td>2nd highest</td><td class="hl">(2248/2249)×100 = <strong>99.9555358</strong></td></tr>
+        </table>
+        <button class="btn bg2 sm" style="margin-top:8px" onclick="fillEg('per')">Try PCM 2026 Example ▶</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ NORMALIZATION ═══════════════════ -->
+<div class="page" id="page-norm">
+  <div class="sh"><div class="snum">3</div><div><div class="stit">Normalization Calculator</div><div class="ssub">Official 3-step methodology from cetcell.mahacet.org | MHT-CET conducted in 16 sessions</div></div></div>
+  <div class="n nw">⚠️ <strong>Why Normalization?</strong> MHT-CET 2026 PCM was held across <strong>16 sessions</strong> (11–20 Apr 2026). Each session may have different difficulty. CET Cell normalizes to ensure fairness. Source: <a href="https://cetcell.mahacet.org/wp-content/uploads/2023/12/MHT-CET-2026-Result-Processing-Methodology.pdf" target="_blank">Official PDF ↗</a></div>
+  <div class="cg2">
+    <div class="card">
+      <div class="ct">⚙️ Normalization Simulator</div>
+      <div class="cs">Simulates your within-session percentile using official CET formula</div>
+      <div class="fg"><label>Your Raw Total Score (0–200)</label><input type="number" id="n1" min="0" max="200" placeholder="e.g. 154" oninput="calcNorm()"><div class="em" id="n1e">Must be 0–200</div></div>
+      <div class="fg"><label>Candidates who scored ≤ your total in your session</label><input type="number" id="n2" min="1" placeholder="e.g. 2200" oninput="calcNorm()"><div class="em" id="n2e">Must be ≥ 1</div></div>
+      <div class="fg"><label>Total appeared in your session</label><input type="number" id="n3" min="1" placeholder="e.g. 2249" oninput="calcNorm()"><div class="em" id="n3e">Must be ≥ 1</div></div>
+      <div class="abar">
+        <button class="btn bp" onclick="calcNorm()">Calculate ⚡</button>
+        <button class="btn bg2 sm" onclick="fillEg('norm')">📖 Official Example</button>
+        <button class="btn bg2 sm" onclick="copyTxt('normR')">📋 Copy</button>
+      </div>
+      <div class="rb" id="normR">
+        <h3>⚙️ Normalization Result</h3>
+        <div class="rg">
+          <div class="ri"><span class="v" id="nv1">—</span><div class="l">Raw Score</div></div>
+          <div class="ri"><span class="v" id="nv2">—</span><div class="l">Scored ≤ You</div></div>
+          <div class="ri"><span class="v" id="nv3">—</span><div class="l">Session Total</div></div>
+          <div class="ri ra" style="grid-column:span 2"><span class="v" id="nv4">—</span><div class="l">Session Percentile (7 decimals)</div></div>
+        </div>
+        <div class="rm" id="normMsg"></div>
+        <div class="n nw" style="margin-top:10px;color:inherit;font-size:.78rem">ℹ️ This is your <em>within-session</em> percentile. Final merged percentile after combining all 16 sessions may differ slightly.</div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="ct">📋 Official 3-Step Process</div>
+        <div style="background:var(--pl);border-radius:var(--rs);padding:12px;margin-bottom:9px;border-left:3px solid var(--pr)">
+          <div style="font-weight:900;color:var(--pr);font-size:.85rem">Step 1 — Random Session Assignment</div>
+          <p style="font-size:.8rem;margin-top:5px">Candidates are <strong>randomly distributed</strong> into sessions. 2026 PCM: 16 sessions across 10 days. This ensures toppers are spread across sessions.</p>
+        </div>
+        <div style="background:var(--pl);border-radius:var(--rs);padding:12px;margin-bottom:9px;border-left:3px solid var(--pr)">
+          <div style="font-weight:900;color:var(--pr);font-size:.85rem">Step 2 — Per-Session Percentile</div>
+          <p style="font-size:.8rem;margin-top:5px">For each session, calculate percentile for Total, Maths, Physics, Chemistry separately:</p>
+          <div class="fb" style="font-size:.76rem;margin-top:7px">Session Percentile = (Scored ≤ you / Session total) × 100</div>
+        </div>
+        <div style="background:var(--pl);border-radius:var(--rs);padding:12px;border-left:3px solid var(--sc)">
+          <div style="font-weight:900;color:var(--sc);font-size:.85rem">Step 3 — Merge All 16 Sessions</div>
+          <p style="font-size:.8rem;margin-top:5px">All session percentiles are merged into one final merit list. Each session topper scores exactly <strong>100.0000000</strong>. In 2026, <strong>26 students</strong> got 100 percentile across different sessions.</p>
+        </div>
+      </div>
+      <div class="ex" style="margin-top:14px">
+        <h4>📊 Sample Session Data (from Official PDF)</h4>
+        <table>
+          <tr><td>Session 1 appeared</td><td class="hl">2,249</td></tr>
+          <tr><td>Session 1 highest raw</td><td class="hl">154</td></tr>
+          <tr><td>Session 1 top percentile</td><td class="hl">100.0000000</td></tr>
+          <tr><td>Session 2 appeared</td><td class="hl">2,272</td></tr>
+          <tr><td>Session 2 highest raw</td><td class="hl">157</td></tr>
+        </table>
+        <button class="btn bg2 sm" style="margin-top:8px" onclick="fillEg('norm')">Try Session 1 Example ▶</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ RANK ═══════════════════ -->
+<div class="page" id="page-rank">
+  <div class="sh"><div class="snum">4</div><div><div class="stit">Rank Estimator</div><div class="ssub">Estimate approximate rank from percentile (N = 4,54,069 for PCM 1st Attempt 2026)</div></div></div>
+  <div class="cg2">
+    <div class="card">
+      <div class="ct">🏅 Estimate Your Rank</div>
+      <div class="fg">
+        <label>Your Percentile (0–100)</label>
+        <input type="number" id="r1" min="0" max="100" step="0.0000001" placeholder="e.g. 98.75" oninput="syncR('r1','rs1',100);calcRank()">
+        <div class="em" id="r1e">Must be 0–100</div>
+        <input type="range" id="rs1" min="0" max="100" step="0.01" value="50" oninput="document.getElementById('r1').value=this.value;calcRank()">
+      </div>
+      <div class="fg">
+        <label>Total Appeared <span class="h">(PCM 1st Attempt 2026 = 4,54,069)</span></label>
+        <input type="number" id="r2" min="1" value="454069" oninput="calcRank()">
+        <div class="em" id="r2e">Enter valid number</div>
+      </div>
+      <div class="abar">
+        <button class="btn bp" onclick="calcRank()">Estimate Rank ⚡</button>
+        <button class="btn bg2 sm" onclick="fillEg('rank')">📖 Example</button>
+        <button class="btn bg2 sm" onclick="copyTxt('rankR')">📋 Copy</button>
+      </div>
+      <div class="rb" id="rankR">
+        <h3>🏅 Estimated Rank</h3>
+        <div class="rg">
+          <div class="ri ra" style="grid-column:span 2"><span class="v" id="rrv1">—</span><div class="l">Approx. Rank</div></div>
+          <div class="ri"><span class="v" id="rrv2">—</span><div class="l">Students Above</div></div>
+          <div class="ri"><span class="v" id="rrv3">—</span><div class="l">Students Below</div></div>
+        </div>
+        <div class="rm" id="rankMsg"></div>
+        <div class="n nw" style="margin-top:10px;color:inherit;font-size:.77rem">⚠️ Approximate. Official rank depends on normalization, multi-session merge & tie-breaking. Check <a href="https://portal-2026.maharashtracet.org/" target="_blank" style="color:inherit">portal-2026.maharashtracet.org</a></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="ct">📐 Formula</div>
+        <div class="fb">Rank ≈ ((100 − Percentile) × N / 100) + 1<br>N = 4,54,069 (PCM 2026 1st Attempt)</div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="ct">🏫 Rank → College Tier Guide</div>
+        <table class="tbl" style="margin-top:8px">
+          <thead><tr><th>Approx. Rank</th><th>Expected Colleges</th></tr></thead>
+          <tbody>
+            <tr><td>1 – 500</td><td>🥇 COEP Pune (CS/IT/ENTC)</td></tr>
+            <tr><td>500 – 2,000</td><td>🥇 VJTI Mumbai, ICT Mumbai</td></tr>
+            <tr><td>2,000 – 8,000</td><td>🥈 SPIT, PICT, Top Autonomous</td></tr>
+            <tr><td>8,000 – 25,000</td><td>🥉 Good aided/unaided colleges</td></tr>
+            <tr><td>25,000 – 60,000</td><td>Other Govt./unaided colleges</td></tr>
+            <tr><td>60,000+</td><td>Management quota / private</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.72rem;color:var(--tm);margin-top:7px">*Varies by category, branch, year. Verify at <a href="https://cetcell.mahacet.org/cap/" target="_blank">CAP Stats ↗</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ COURSE FINDER ═══════════════════ -->
+<div class="page" id="page-suggest">
+  <div class="sh"><div class="snum">5</div><div><div class="stit">AI Course & College Finder</div><div class="ssub">Personalized suggestions — AI queries your proxy for live college data</div></div></div>
+  <div class="cg2">
+    <div class="card">
+      <div class="ct">🎯 Find Your Best Fit</div>
+      <div class="fg"><label>Your Percentile</label><input type="number" id="cf1" min="0" max="100" step="0.01" placeholder="e.g. 97.5" oninput="updateStaticSug()"></div>
+      <div class="fg"><label>Category</label>
+        <select class="inp" id="cf2" onchange="updateStaticSug()">
+          <option value="open">Open / General</option><option value="obc">OBC</option>
+          <option value="sc">SC</option><option value="st">ST</option>
+          <option value="sebc">SEBC / EWS</option><option value="vjnt">VJ/NT</option>
+        </select>
+      </div>
+      <div class="fg"><label>Interest Area</label>
+        <select class="inp" id="cf3" onchange="updateStaticSug()">
+          <option value="all">All Fields</option><option value="cs">Computers / IT / AI</option>
+          <option value="mech">Mechanical</option><option value="civil">Civil Engineering</option>
+          <option value="elec">Electrical / Electronics</option>
+          <option value="chem">Chemical / Pharma</option><option value="bio">Biotechnology</option>
+          <option value="agri">Agriculture</option>
+        </select>
+      </div>
+      <div class="abar">
+        <button class="btn bp" onclick="updateStaticSug()">Find Courses ⚡</button>
+        <button class="btn bs" id="aiSugBtn" onclick="fetchAISuggestion()">🤖 Get AI Suggestion</button>
+      </div>
+      <div id="staticSug" style="margin-top:14px"></div>
+      <div id="aiSugResult" style="margin-top:14px;display:none"></div>
+      <div id="aiSugLoader" style="display:none;padding:20px;text-align:center"><div class="loader dark"></div><p style="font-size:.82rem;color:var(--tm);margin-top:10px">AI is analyzing your profile and finding best colleges…</p></div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="ct">📚 Courses via MHT-CET PCM</div>
+        <div class="n ni" style="font-size:.8rem">MHT-CET PCM enables admission to:<br>✅ B.E. / B.Tech Engineering<br>✅ B.Pharm (Pharmacy)<br>✅ B.Sc. Agriculture & Allied Sciences<br>✅ B.Tech Agri Engineering<br>✅ Pharm D<br><a href="https://cetcell.mahacet.org/cap-_2026-27/" target="_blank">→ Full CAP 2026-27 details ↗</a></div>
+        <div class="n nw" style="margin-top:8px;font-size:.8rem">📋 JEE Main 2026 score also accepted for engineering admissions in Maharashtra. Check CAP brochure for details.</div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="ct">💡 Category-wise Percentile Guide</div>
+        <table class="tbl" style="margin-top:8px">
+          <thead><tr><th>Category</th><th>COEP CS Approx</th><th>Good College</th></tr></thead>
+          <tbody>
+            <tr><td>Open</td><td>99.9+</td><td>97+</td></tr>
+            <tr><td>OBC</td><td>99.8+</td><td>95+</td></tr>
+            <tr><td>SC</td><td>99.0+</td><td>90+</td></tr>
+            <tr><td>ST</td><td>97.0+</td><td>85+</td></tr>
+            <tr><td>SEBC/EWS</td><td>99.7+</td><td>94+</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.72rem;color:var(--tm);margin-top:7px">*Indicative from historical CAP cutoffs. Verify at <a href="https://cetcell.mahacet.org/cap/" target="_blank">cetcell.mahacet.org/cap ↗</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ COLLEGES ═══════════════════ -->
+<div class="page" id="page-colleges">
+  <div class="sh"><div class="snum">6</div><div><div class="stit">College Directory</div><div class="ssub">Top Maharashtra colleges — historical CAP cutoff reference</div></div></div>
+  <div class="n nw">⚠️ Cutoffs are indicative from historical data. 2026 official cutoffs will be published after CAP rounds at <a href="https://cetcell.mahacet.org/cap-_2026-27/" target="_blank">cetcell.mahacet.org/cap-_2026-27</a></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
+    <button class="btn bp" onclick="filterClg('all')">All</button>
+    <button class="btn bg2" onclick="filterClg('99+')">99+ Percentile</button>
+    <button class="btn bg2" onclick="filterClg('97-99')">97–99</button>
+    <button class="btn bg2" onclick="filterClg('93-97')">93–97</button>
+    <button class="btn bg2" onclick="filterClg('below93')">Below 93</button>
+  </div>
+  <div class="clg-grid" id="clgGrid"></div>
+</div>
+
+<!-- ═══════════════════ TIE-BREAKING ═══════════════════ -->
+<div class="page" id="page-tiebreak">
+  <div class="sh"><div class="snum">7</div><div><div class="stit">Tie-Breaking Rules</div><div class="ssub">Official CET Cell criteria when percentile scores match to 7 decimal places</div></div></div>
+  <div class="n nw">📢 Source: <a href="https://cetcell.mahacet.org/wp-content/uploads/2023/12/MHT-CET-2026-Result-Processing-Methodology.pdf" target="_blank">Official MHT-CET 2026 Result Processing Methodology PDF ↗</a></div>
+  <div class="card" style="margin-top:14px"><div class="ct">🔗 Tie-Breaking Hierarchy</div><div id="tieAcc" style="margin-top:12px"></div></div>
+  <div class="card">
+    <div class="ct">🎯 Interactive Demo</div>
+    <div class="cs">Both students: Percentile = 98.5000000</div>
+    <div class="vs-wrap">
+      <div class="vsc" id="vsA"><div class="sname">Student A</div><div class="srow"><span>Percentile:</span><span>98.5000000</span></div><div class="srow"><span>Maths:</span><span id="mA" style="font-weight:900;color:var(--pr)">88</span></div><div class="srow"><span>Physics:</span><span id="pA">45</span></div><div class="srow"><span>Chem:</span><span id="cA">42</span></div></div>
+      <div class="vs-dot">VS</div>
+      <div class="vsc" id="vsB"><div class="sname">Student B</div><div class="srow"><span>Percentile:</span><span>98.5000000</span></div><div class="srow"><span>Maths:</span><span id="mB" style="font-weight:900;color:var(--pr)">91</span></div><div class="srow"><span>Physics:</span><span id="pB">45</span></div><div class="srow"><span>Chem:</span><span id="cB">42</span></div></div>
+    </div>
+    <div class="n ns" id="tieRes">🏆 <strong>Student B ranks better</strong> — Higher Maths marks (91 > 88). Criterion 1 applied.</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+      <button class="btn bg2 sm" onclick="tieDemo('math')">Different Maths</button>
+      <button class="btn bg2 sm" onclick="tieDemo('phy')">Same Maths, diff Physics</button>
+      <button class="btn bg2 sm" onclick="tieDemo('equal')">All equal</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ COMPARE ═══════════════════ -->
+<div class="page" id="page-compare">
+  <div class="sh"><div class="snum">8</div><div><div class="stit">Percentage vs Percentile</div><div class="ssub">Why MHT-CET CAP uses Percentile — not Percentage</div></div></div>
+  <div class="card">
+    <table class="tbl">
+      <thead><tr><th>Aspect</th><th>📊 Percentage</th><th>📈 Percentile</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Definition</strong></td><td>Marks ÷ Max × 100</td><td>% of students at or below your score</td></tr>
+        <tr><td><strong>Type</strong></td><td>Absolute (fixed)</td><td>Relative (changes with competition)</td></tr>
+        <tr><td><strong>Used in CAP?</strong></td><td>❌ No</td><td>✅ Yes — official merit list</td></tr>
+        <tr><td><strong>Paper difficulty effect</strong></td><td>Affected</td><td>Neutralized by normalization</td></tr>
+        <tr><td><strong>Precision</strong></td><td>2 decimal places</td><td>7 decimal places</td></tr>
+        <tr><td><strong>Range</strong></td><td>0% to 100%</td><td>0.0000000 to 100.0000000</td></tr>
+        <tr><td><strong>Example</strong></td><td>155/200 = 77.5%</td><td>Rank 5001 / 454069 → 98.8990080</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct">🏫 Classroom Visual (100 Students)</div>
+    <div class="cs">Your marks = 70 (70%). Only 10 scored higher. Your percentile ≈ 90.</div>
+    <div class="clroom" id="clrm"></div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0;font-size:.79rem">
+      <span><span style="background:#fca5a5;width:12px;height:12px;display:inline-block;border-radius:50%;vertical-align:middle;margin-right:4px"></span>10 scored higher</span>
+      <span><span style="background:var(--ac);width:12px;height:12px;display:inline-block;border-radius:50%;vertical-align:middle;margin-right:4px"></span>You (70 marks)</span>
+      <span><span style="background:#bfdbfe;width:12px;height:12px;display:inline-block;border-radius:50%;vertical-align:middle;margin-right:4px"></span>89 scored lower</span>
+    </div>
+    <div class="n ns">🎓 <strong>Key insight:</strong> Percentage = 70% but Percentile ≈ 90. In MHT-CET CAP, the percentile (90) decides your merit rank — not the 70%.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════ DATES ═══════════════════ -->
+<div class="page" id="page-dates">
+  <div class="sh"><div class="snum">9</div><div><div class="stit">Important Dates 2026-27</div><div class="ssub">Live-sourced from cetcell.mahacet.org — click Refresh for latest</div></div></div>
+  <div style="display:flex;gap:8px;margin-bottom:14px">
+    <button class="btn bp" onclick="pg('live',document.querySelectorAll('.nt')[1])">🔴 Fetch Live Dates from CET Cell</button>
+  </div>
+  <div class="cg2">
+    <div class="card">
+      <div class="ct">📅 PCM 2026 Timeline</div>
+      <ul class="timeline" style="margin-top:12px">
+        <li class="tli"><div class="tldot done">✓</div><div class="tltit">PCM 1st Attempt Exam</div><div class="tldate">11–20 Apr 2026 (16 sessions)</div><div class="tldesc">Conducted across all Maharashtra districts</div></li>
+        <li class="tli"><div class="tldot done">✓</div><div class="tltit">Answer Key Objection Window</div><div class="tldate">20 May 2026</div></li>
+        <li class="tli"><div class="tldot done">✓</div><div class="tltit">PCM 1st Attempt Result</div><div class="tldate">15 Jun 2026 ✅</div><div class="tldesc">4,54,069 appeared. 26 students scored 100 Percentile.</div></li>
+        <li class="tli"><div class="tldot done">✓</div><div class="tltit">Result Summary Press Note</div><div class="tldate">16 Jun 2026</div><div class="tldesc"><a href="https://cetcell.mahacet.org/wp-content/uploads/2026/06/Press-Note-MHT-CET-PCM-Group-1st-Attempt_-2026.pdf" target="_blank">Download PDF ↗</a></div></li>
+        <li class="tli"><div class="tldot curr">⏳</div><div class="tltit">PCM 2nd Attempt Objection Redressal</div><div class="tldate">In Progress — Jun 2026</div><div class="tldesc"><a href="https://cetcell.mahacet.org/wp-content/uploads/2026/06/Objection_MHT-CET-PCM-2026-Second-Attempt_Notice.pdf" target="_blank">Notice PDF ↗</a></div></li>
+        <li class="tli"><div class="tldot upco">○</div><div class="tltit">PCM 2nd Attempt Result</div><div class="tldate">Expected: Jul 2026</div></li>
+        <li class="tli"><div class="tldot upco">○</div><div class="tltit">CAP 2026-27 Registration</div><div class="tldate">Expected: Jul–Aug 2026</div><div class="tldesc"><a href="https://cetcell.mahacet.org/cap-_2026-27/" target="_blank">CAP Page ↗</a></div></li>
+        <li class="tli"><div class="tldot upco">○</div><div class="tltit">CAP Round 1 Allotment</div><div class="tldate">Expected: Aug–Sep 2026</div></li>
+        <li class="tli"><div class="tldot upco">○</div><div class="tltit">CAP Round 2 & 3 Allotment</div><div class="tldate">Expected: Sep–Oct 2026</div></li>
+      </ul>
+    </div>
+    <div>
+      <div class="card">
+        <div class="ct">🔗 Latest Official Notifications</div>
+        <table class="tbl" style="margin-top:10px">
+          <thead><tr><th>Date</th><th>Notification</th></tr></thead>
+          <tbody>
+            <tr><td>16/06/26</td><td><a href="https://cetcell.mahacet.org/wp-content/uploads/2026/06/Press-Note-MHT-CET-PCM-Group-1st-Attempt_-2026.pdf" target="_blank">PCM Result Summary PDF ↗</a></td></tr>
+            <tr><td>15/06/26</td><td><a href="https://portal-2026.maharashtracet.org/" target="_blank">PCM Result Declared ↗</a></td></tr>
+            <tr><td>15/06/26</td><td><a href="https://cetcell.mahacet.org/wp-content/uploads/2026/06/CAP-Reg-Notice_2026-BED-MED-and-MED.pdf" target="_blank">BED-MED CAP Schedule ↗</a></td></tr>
+            <tr><td>09/06/26</td><td><a href="https://cetcell.mahacet.org/wp-content/uploads/2026/06/Notification_PCB_1st-Attempt-Result.pdf" target="_blank">PCB Result Summary ↗</a></td></tr>
+            <tr><td>09/06/26</td><td><a href="https://cetcell.mahacet.org/wp-content/uploads/2026/06/Agri-English.pdf" target="_blank">Agriculture Courses Info ↗</a></td></tr>
+            <tr><td>08/06/26</td><td><a href="https://cetcell.mahacet.org/wp-content/uploads/2026/06/List-of-operative-centres-08062026.pdf" target="_blank">विद्यार्थी सहाय्यता केंद्रे ↗</a></td></tr>
+          </tbody>
+        </table>
+        <div class="n nw" style="margin-top:10px;font-size:.77rem">↑ Static snapshot. For truly live notifications, use the <strong>Live Updates</strong> tab → Fetch Latest.</div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="ct">📌 Quick Links</div>
+        <ul style="list-style:none;padding:0;font-size:.82rem">
+          <li style="padding:7px 0;border-bottom:1px solid var(--bd)">🖥 <a href="https://portal-2026.maharashtracet.org/" target="_blank">CET Portal 2026 (Score card / Login)</a></li>
+          <li style="padding:7px 0;border-bottom:1px solid var(--bd)">📋 <a href="https://cetcell.mahacet.org/cap-_2026-27/" target="_blank">CAP 2026-27 Admission Process</a></li>
+          <li style="padding:7px 0;border-bottom:1px solid var(--bd)">📞 <a href="https://cetcell.mahacet.org/helpline/" target="_blank">Helpline / Contact CET Cell</a></li>
+          <li style="padding:7px 0">🌐 <a href="https://fn.mahacet.org/" target="_blank">Foreign Candidate Registration</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ STATS ═══════════════════ -->
+<div class="page" id="page-stats">
+  <div class="sh"><div class="snum">10</div><div><div class="stit">Official Statistics 2026</div><div class="ssub">From Press Note: Notification No. TED-1226/C.No.05/PCM Result/CET/2026/1399 dated 16/06/2026</div></div></div>
+  <div class="n ns">✅ All data sourced from official CET Cell press note. <a href="https://cetcell.mahacet.org/wp-content/uploads/2026/06/Press-Note-MHT-CET-PCM-Group-1st-Attempt_-2026.pdf" target="_blank">Download PDF ↗</a></div>
+  <div class="cg2" style="margin-top:14px">
+    <div>
+      <div class="card">
+        <div class="ct">📊 Attendance (Gender-wise)</div>
+        <table class="tbl" style="margin-top:10px">
+          <thead><tr><th></th><th>Total</th><th>Male</th><th>Female</th><th>Other</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Registered</strong></td><td>4,79,332</td><td>2,89,707</td><td>1,89,604</td><td>21</td></tr>
+            <tr><td><strong>Appeared</strong></td><td>4,54,069</td><td>2,73,135</td><td>1,80,916</td><td>18</td></tr>
+            <tr><td><strong>%</strong></td><td>94.73%</td><td>94.28%</td><td>95.42%</td><td>85.71%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="ct">🏆 Category-wise Toppers</div>
+        <table class="tbl" style="margin-top:8px;font-size:.78rem">
+          <thead><tr><th>Category</th><th>Name</th><th>Percentile</th><th>District</th></tr></thead>
+          <tbody>
+            <tr><td>Open</td><td>AARYAN SHAILENDRA KUNJEER</td><td>100.0000000</td><td>Pune</td></tr>
+            <tr><td>OBC</td><td>ARYAN AJITSHARMA</td><td>100.0000000</td><td>Nagpur</td></tr>
+            <tr><td>SC</td><td>LADE AISHWARY ATUL</td><td>100.0000000</td><td>Nagpur</td></tr>
+            <tr><td>ST</td><td>JADHAV ANANT ASHOK</td><td>100.0000000</td><td>Dharashiv</td></tr>
+            <tr><td>SEBC</td><td>WADHEKAR SWAPNIL ASHOK</td><td>99.9965870</td><td>Hingoli</td></tr>
+            <tr><td>VJ/NT</td><td>HARSHVARDHAN RAMESH JADHAV</td><td>99.9861974</td><td>Dharashiv</td></tr>
+            <tr><td>NT-B</td><td>JAANVIKA AHIR</td><td>99.9961201</td><td>Nagpur</td></tr>
+            <tr><td>NT-C</td><td>ANUSHK PRAMOD GAWADE</td><td>99.9719976</td><td>Pune</td></tr>
+            <tr><td>NT-D</td><td>PHAD AMOL DATTATRAY</td><td>99.9929570</td><td>Parbhani</td></tr>
+            <tr><td>SBC</td><td>AKOSKAR NILESH SHIVAJI</td><td>99.9686880</td><td>Pune</td></tr>
+            <tr><td>OMS</td><td>ARYAMAN V DOKANIA</td><td>100.0000000</td><td>Kolkata</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="ct">🌟 All 26 Students — 100 Percentile</div>
+        <div style="overflow-y:auto;max-height:340px">
+          <table class="tbl" style="font-size:.77rem">
+            <thead><tr><th>#</th><th>Name</th><th>District</th><th>Cat</th></tr></thead>
+            <tbody id="topTbl"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="ct">📌 Key Facts</div>
+        <ul style="list-style:none;padding:0;font-size:.82rem">
+          <li style="padding:6px 0;border-bottom:1px solid var(--bd)">🗓 Exam: 11–20 Apr 2026 (16 sessions)</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--bd)">📋 Notification: TED-1226/C.No.05/PCM Result/CET/2026/1399</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--bd)">📅 Result Date: 15 June 2026</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--bd)">🌟 100 Percentile: 26 students (Male: 21, Female: 5)</li>
+          <li style="padding:6px 0">🔗 <a href="https://portal-2026.maharashtracet.org/" target="_blank">Get score card at CET Portal ↗</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ AI CHATBOT ═══════════════════ -->
+<div class="page" id="page-chatbot">
+  <div class="sh"><div class="snum">🤖</div><div><div class="stit">Ask AI — MHT-CET Expert</div><div class="ssub">Ask anything about MHT-CET 2026 in English or Marathi — AI fetches live data from cetcell.mahacet.org</div></div></div>
+  <div class="card">
+    <div class="ct">🤖 CET AI Assistant</div>
+    <div class="n ni" style="margin-bottom:12px">💡 This assistant uses AI with web search to answer your MHT-CET questions in real time. It reads cetcell.mahacet.org when needed. Requires your proxy server to be running.</div>
+    <div class="chat-box">
+      <div class="chat-msgs" id="chatMsgs">
+        <div class="msg bot">नमस्कार! 👋 I'm your MHT-CET 2026 AI assistant. Ask me anything — result dates, percentile calculation, college suggestions, normalization, CAP schedule, or anything else about MHT-CET PCM 2026!</div>
+      </div>
+      <div class="chat-input-area">
+        <input type="text" id="chatIn" placeholder="Ask anything... e.g. When will CAP registration start?" onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="btn bp" onclick="sendChat()">Send ➤</button>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <p style="font-size:.79rem;color:var(--tm);margin-bottom:8px">Quick questions:</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bg2 sm" onclick="quickAsk('When will CAP 2026-27 registration start?')">CAP dates?</button>
+        <button class="btn bg2 sm" onclick="quickAsk('How is MHT-CET percentile calculated?')">Percentile formula?</button>
+        <button class="btn bg2 sm" onclick="quickAsk('What are the tie-breaking rules in MHT-CET PCM?')">Tie-breaking?</button>
+        <button class="btn bg2 sm" onclick="quickAsk('Which colleges can I get with 97 percentile in Open category?')">97 %ile colleges?</button>
+        <button class="btn bg2 sm" onclick="quickAsk('PCM 2nd attempt result kav yenar?')">2nd attempt result?</button>
+        <button class="btn bg2 sm" onclick="quickAsk('How does normalization work in MHT-CET 2026?')">Normalization?</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MARATHI ═══════════════════ -->
+<div class="page" id="page-marathi">
+  <div class="sh"><div class="snum">म</div><div><div class="stit deva">MHT-CET संपूर्ण मार्गदर्शन</div><div class="ssub deva">cetcell.mahacet.org | PCM 2026 विद्यार्थ्यांसाठी</div></div></div>
+  <div class="n ns deva">📢 <strong>ताज्या बातम्या (16 जून 2026):</strong> MHT-CET PCM 1ला प्रयत्न निकाल जाहीर! 4,54,069 उपस्थित · 26 विद्यार्थ्यांनी 100 Percentile मिळवले. Score card: <a href="https://portal-2026.maharashtracet.org/" target="_blank">portal-2026.maharashtracet.org ↗</a></div>
+  <div class="card mc">
+    <div class="ct deva" style="color:var(--ad)">📊 टक्केवारी म्हणजे काय?</div>
+    <p class="deva" style="font-size:.9rem;line-height:1.9;margin-top:10px">टक्केवारी म्हणजे विद्यार्थ्याने एकूण 200 गुणांपैकी किती गुण मिळवले हे दर्शवणारी <strong>परिपूर्ण (absolute)</strong> संख्या. उदा: Physics 40 + Chemistry 35 + Maths 80 = 155 → टक्केवारी = (155÷200)×100 = <strong>77.5%</strong></p>
+    <div class="fb deva">टक्केवारी = (मिळालेले गुण ÷ 200) × 100</div>
+  </div>
+  <div class="card mc">
+    <div class="ct deva" style="color:var(--ad)">📈 Percentile म्हणजे काय?</div>
+    <p class="deva" style="font-size:.9rem;line-height:1.9;margin-top:10px">Percentile म्हणजे इतर विद्यार्थ्यांच्या तुलनेत तुमची कामगिरी. MHT-CET मध्ये CAP merit list साठी <strong>Percentile</strong> वापरली जाते — टक्केवारी नाही. 2026 मध्ये 4,54,069 विद्यार्थी उपस्थित होते. 26 जणांनी 100 Percentile मिळवले.</p>
+    <div class="fb deva">Percentile = ((N − तुमचा क्रमांक + 1) ÷ N) × 100<br>7 दशांश स्थानांपर्यंत गणना</div>
+    <div class="n ns deva" style="margin-top:8px">✅ Percentile 98 म्हणजे तुम्ही 98% विद्यार्थ्यांपेक्षा चांगले केले</div>
+  </div>
+  <div class="card mc">
+    <div class="ct deva" style="color:var(--ad)">⚙️ Normalization म्हणजे काय?</div>
+    <p class="deva" style="font-size:.9rem;line-height:1.9;margin-top:10px">PCM 2026 मध्ये <strong>16 सत्रांमध्ये</strong> परीक्षा घेण्यात आली (11–20 एप्रिल 2026). प्रत्येक सत्राचा कठीणपणा वेगळा असू शकतो. Normalization मुळे सर्व सत्रांतील विद्यार्थ्यांना समान न्याय मिळतो. प्रत्येक सत्रातील topper ला <strong>100.0000000 Percentile</strong> मिळते.</p>
+  </div>
+  <div class="card mc">
+    <div class="ct deva" style="color:var(--ad)">🔗 Tie-Breaking नियम</div>
+    <ol class="deva" style="margin:10px 0 0 20px;font-size:.9rem;line-height:2.1">
+      <li>गणित (Mathematics) — जास्त गुण → चांगला क्रमांक</li>
+      <li>भौतिकशास्त्र (Physics) — दुसरा निकष</li>
+      <li>रसायनशास्त्र (Chemistry) — तिसरा निकष</li>
+      <li>१२वी बोर्ड गुण — चौथा निकष</li>
+      <li>वय (मोठे) — अंतिम निकष</li>
+    </ol>
+    <div class="n ns deva" style="margin-top:10px">उदाहरण: A चे Maths=88, B चे Maths=91, दोन्हींचे Percentile समान → <strong>B ला चांगला क्रमांक</strong></div>
+  </div>
+  <div class="card mc">
+    <div class="ct deva" style="color:var(--ad)">💡 एका ओळीत सारांश</div>
+    <div class="cg2" style="margin-top:12px">
+      <div style="background:var(--pr);color:#fff;border-radius:10px;padding:16px;text-align:center" class="deva"><div style="font-size:2rem">📊</div><div style="font-weight:900;font-size:1rem;margin-top:5px">टक्केवारी = तुमचे गुण</div><div style="font-size:.8rem;opacity:.85;margin-top:4px">(Absolute — Fixed)</div></div>
+      <div style="background:var(--ac);color:#fff;border-radius:10px;padding:16px;text-align:center" class="deva"><div style="font-size:2rem">📈</div><div style="font-weight:900;font-size:1rem;margin-top:5px">Percentile = तुमचे स्थान</div><div style="font-size:.8rem;opacity:.85;margin-top:4px">(Relative — CAP साठी)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ QUICK REF ═══════════════════ -->
+<div class="page" id="page-quickref">
+  <div class="sh"><div class="snum">⚡</div><div><div class="stit">Quick Reference</div><div class="ssub">Formulas, rank chart (N=4,54,069), official links — everything in one place</div></div></div>
+  <div class="cg2">
+    <div class="card">
+      <div class="ct">⚡ Percentile → Rank (PCM 2026, N=4,54,069)</div>
+      <table class="tbl" style="margin-top:10px">
+        <thead><tr><th>Percentile</th><th>Approx. Rank</th><th>Tier</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge gold">100.00</span></td><td>1–26</td><td>🌟 100 Percentilers</td></tr>
+          <tr><td><span class="badge gold">99.99</span></td><td>~45</td><td>🌟 Exceptional</td></tr>
+          <tr><td><span class="badge blue">99.90</span></td><td>~454</td><td>⭐ COEP/VJTI CS</td></tr>
+          <tr><td><span class="badge blue">99.50</span></td><td>~2,270</td><td>⭐ Top Colleges</td></tr>
+          <tr><td><span class="badge blue">99.00</span></td><td>~4,541</td><td>✅ Good Tier-1</td></tr>
+          <tr><td><span class="badge green">98.00</span></td><td>~9,081</td><td>✅ Good Tier-2</td></tr>
+          <tr><td><span class="badge green">97.00</span></td><td>~13,622</td><td>👍 Tier-2 Colleges</td></tr>
+          <tr><td><span class="badge green">95.00</span></td><td>~22,703</td><td>👍 Aided Colleges</td></tr>
+          <tr><td><span class="badge gray">90.00</span></td><td>~45,407</td><td>Top 10%</td></tr>
+          <tr><td><span class="badge gray">85.00</span></td><td>~68,110</td><td>Top 15%</td></tr>
+          <tr><td><span class="badge gray">80.00</span></td><td>~90,814</td><td>Top 20%</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.72rem;color:var(--tm);margin-top:8px">*Based on N=4,54,069 (PCM 2026 1st Attempt). Ranks are approximate.</p>
+    </div>
+    <div>
+      <div class="card">
+        <div class="ct">📐 All Formulas</div>
+        <div class="fb" style="font-size:.8rem">
+          <strong>1. Percentage:</strong><br>(Phy + Chem + Maths) / 200 × 100<br><br>
+          <strong>2. Session Percentile (Normalization):</strong><br>(Scored ≤ yours / Session total) × 100<br><br>
+          <strong>3. Percentile from rank:</strong><br>((N − Rank + 1) / N) × 100<br><br>
+          <strong>4. Rank from Percentile:</strong><br>((100 − Percentile) × N / 100) + 1<br><br>
+          <strong>5. Tie-Breaking:</strong><br>Maths → Physics → Chem → HSC → Age
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="ct">🔗 Official Links</div>
+        <ul style="list-style:none;padding:0;font-size:.81rem">
+          <li style="padding:6px 0;border-bottom:1px solid var(--bd)"><a href="https://portal-2026.maharashtracet.org/" target="_blank">🖥 CET Portal 2026 (Score card)</a></li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--bd)"><a href="https://cetcell.mahacet.org/cap-_2026-27/" target="_blank">📋 CAP 2026-27 Process</a></li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--bd)"><a href="https://cetcell.mahacet.org/wp-content/uploads/2023/12/MHT-CET-2026-Result-Processing-Methodology.pdf" target="_blank">📄 Normalization PDF</a></li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--bd)"><a href="https://cetcell.mahacet.org/wp-content/uploads/2023/12/CET-Cell-Malpractice-Rules.pdf" target="_blank">📋 Malpractice Rules</a></li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--bd)"><a href="https://cetcell.mahacet.org/syllabus-and-marking-scheme/" target="_blank">📚 Syllabus & Marking Scheme</a></li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--bd)"><a href="https://cetcell.mahacet.org/cet-2/" target="_blank">📊 CET Statistics</a></li>
+          <li style="padding:6px 0"><a href="https://cetcell.mahacet.org/helpline/" target="_blank">📞 Helpline</a></li>
+        </ul>
+        <div class="n ni" style="margin-top:10px;font-size:.76rem">📍 CET Cell: 8th Floor, New Excelsior Bldg, A.K. Nayak Marg, Fort, Mumbai 400 001</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <p>MHT-CET PCM 2026 Live Dashboard | Data from <a href="https://cetcell.mahacet.org/" target="_blank">cetcell.mahacet.org</a></p>
+  <p>State Common Entrance Test Cell, Government of Maharashtra · Fort, Mumbai 400 001</p>
+  <p style="font-size:.7rem;opacity:.65;margin-top:6px">⚠️ Educational tool only. Calculations are approximate. Official results at portal-2026.maharashtracet.org. Data sourced from official CET Cell notifications dated 15–16 June 2026.</p>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════════════
+const TOPPERS=[["AARYAN SHAILENDRA KUNJEER","Pune","Open"],["ADARSH RAJ","Mumbai Sub.","Open"],["AGASTHYA PACHORY","Jabalpur","OMS"],["ARYAMAN V DOKANIA","Kolkata","OMS"],["ARYAN AJITSHARMA","Nagpur","OBC"],["CHAITANYA GANESH YERNE","Chandrapur","OBC"],["CHAUBEY ASHUTOSHKUMAR SANJAY","Mumbai","Open"],["CHAUDHARI DARSHAN GANESH","Chandrapur","OBC"],["DARSHIL RAJAN KUNTE","Thane","OMS"],["GAGARE ISHWARI SURESH","Ahilyanagar","OBC"],["IBADUR RAHMAN KAMRUL BARLASKAR","Pune","Open"],["JADHAV ANANT ASHOK","Dharashiv","ST"],["JANHAVI ASATI","Gondia","OMS"],["JANHVI MISHRA","Chandrapur","Open"],["KANISHK DEVENDRA WAGH","Nagpur","Open"],["KHANAPURE SARTHAK","Solapur","Open"],["KHOSE DHRUV DHARMARAJ","Latur","Open"],["LADE AISHWARY ATUL","Nagpur","SC"],["NAMISH KAUSHIK","Pune","Open"],["NMYA DHIRAJ AGRAWAL","Gondia","Open"],["RAJDEEP VITTHAL THAKARE","Yavatmal","OBC"],["REYAN KUMAR","Mumbai","Open"],["RUTURAJ PRAJESH RAJE","Gondia","Open"],["SHOURYA FULBANDHE","Nagpur","OBC"],["SHOURYA PANKAJ SINGH","Thane","Open"],["TALELE VED RUPESH","Thane","Open"]];
+
+const COLLEGES=[{n:"COEP Pune (Autonomous)",c:"Pune",t:"Government",cut:99.9,tier:"gold",b:"CS/IT/ENTC/Mech/Civil",u:"https://www.coeptech.ac.in/"},{n:"VJTI Mumbai",c:"Mumbai",t:"Government",cut:99.8,tier:"gold",b:"CS/IT/Mech/Civil/Prod",u:"https://vjti.ac.in/"},{n:"ICT Mumbai (UDCT)",c:"Mumbai",t:"Government",cut:99.7,tier:"gold",b:"Chemical/Pharma/Petro",u:"https://ictmumbai.edu.in/"},{n:"SPIT Mumbai",c:"Mumbai",t:"Autonomous",cut:99.5,tier:"blue",b:"CS/IT/EXTC/Elex",u:"https://www.spit.ac.in/"},{n:"PICT Pune",c:"Pune",t:"Autonomous",cut:99.0,tier:"blue",b:"CS/IT/ENTC",u:"https://pict.edu/"},{n:"Walchand College Sangli",c:"Sangli",t:"Autonomous",cut:98.5,tier:"blue",b:"CS/Mech/Civil/Elex",u:"https://www.walchandsangli.ac.in/"},{n:"KJ Somaiya Mumbai",c:"Mumbai",t:"Autonomous",cut:97.5,tier:"blue",b:"CS/IT/Electronics",u:"https://kjsieit.somaiya.edu/"},{n:"Vishwakarma Inst. Pune",c:"Pune",t:"Autonomous",cut:96.0,tier:"green",b:"CS/IT/Mech/Civil",u:"https://www.vit.edu/"},{n:"Symbiosis Inst. of Tech.",c:"Pune",t:"Autonomous",cut:95.0,tier:"green",b:"CS/IT/AI/Data Science",u:"https://www.sitpune.edu.in/"},{n:"MIT-ADT University",c:"Pune",t:"Private",cut:93.0,tier:"green",b:"CS/IT/Mech/ENTC",u:"https://www.mituniversity.edu.in/"},{n:"Cummins College Pune",c:"Pune",t:"Autonomous",cut:93.0,tier:"green",b:"CS/IT/Mech (Women)",u:"https://www.cumminscollege.in/"},{n:"RCOEM Nagpur",c:"Nagpur",t:"Autonomous",cut:92.0,tier:"green",b:"CS/IT/Mech/Civil",u:"https://rknec.edu/"},{n:"PVPIT Budhgaon Sangli",c:"Sangli",t:"Govt. Aided",cut:90.0,tier:"gray",b:"Mech/Civil/CS/Elex",u:""},{n:"MGM College Aurangabad",c:"Aurangabad",t:"Autonomous",cut:88.0,tier:"gray",b:"CS/IT/Mech",u:""},{n:"B.Pharm Colleges (Top)",c:"Maharashtra",t:"Various",cut:85.0,tier:"gray",b:"B.Pharm / Pharm D",u:"https://cetcell.mahacet.org/cap-_2026-27/"},{n:"Agriculture Colleges",c:"Maharashtra",t:"Government",cut:80.0,tier:"gray",b:"B.Sc. Agri / Agri Engg",u:"https://cetcell.mahacet.org/wp-content/uploads/2026/06/Agri-English.pdf"}];
+
+const COURSES=[{icon:"💻",t:"Computer Science & Engg.",m:["cs","all"],co:99.0,desc:"Algorithms, AI, Systems, Web. Best career prospects in Maharashtra.",pkg:"8–25 LPA"},{icon:"🤖",t:"Data Science / AI / ML",m:["cs","all"],co:98.0,desc:"Emerging field. Offered by newer autonomous colleges like SIT Pune.",pkg:"7–20 LPA"},{icon:"📡",t:"Electronics & Telecom",m:["elec","all"],co:97.5,desc:"VLSI, embedded systems, IoT, telecom. Strong at VJTI, COEP.",pkg:"6–18 LPA"},{icon:"⚡",t:"Electrical Engineering",m:["elec","all"],co:95.0,desc:"Power systems, smart grid, EV industry. Good government college options.",pkg:"5–14 LPA"},{icon:"🔧",t:"Mechanical Engineering",m:["mech","all"],co:94.0,desc:"Design, manufacturing, automotive, robotics. Very wide job market.",pkg:"4–14 LPA"},{icon:"🏗️",t:"Civil Engineering",m:["civil","all"],co:92.0,desc:"Infrastructure, smart cities, real estate. Govt. projects driving growth.",pkg:"4–12 LPA"},{icon:"🧪",t:"Chemical Engineering",m:["chem","all"],co:93.0,desc:"Process, petrochemical, polymers. ICT Mumbai is top for this.",pkg:"5–16 LPA"},{icon:"💊",t:"Pharmacy (B.Pharm)",m:["chem","bio","all"],co:88.0,desc:"Drug design, clinical pharmacy, QA. 4-year degree. Growing pharma sector.",pkg:"3–10 LPA"},{icon:"🌱",t:"B.Sc. Agriculture",m:["agri","bio","all"],co:82.0,desc:"9 programs via PCM/PCB CET. Government college seats widely available.",pkg:"3–8 LPA"},{icon:"🧬",t:"Biotechnology Engg.",m:["bio","chem","all"],co:90.0,desc:"Combines biology + engineering. Growing industry post-COVID.",pkg:"4–12 LPA"}];
+
+const TIERULES=[{t:"1️⃣ Higher Mathematics Marks (1st Priority)",c:`<p style="font-size:.84rem;line-height:1.7">Among equal-percentile students, the one with <strong>higher Mathematics raw marks</strong> gets a better rank. Maths carries 100 marks (double weightage) and is the FIRST tiebreaker. Source: <a href="https://cetcell.mahacet.org/wp-content/uploads/2023/12/MHT-CET-2026-Result-Processing-Methodology.pdf" target="_blank">Official PDF ↗</a></p>`},{t:"2️⃣ Higher Physics Marks (2nd Priority)",c:`<p style="font-size:.84rem;line-height:1.7">If Maths marks are equal, <strong>higher Physics marks</strong> decide the better rank. Physics carries 50 marks.</p>`},{t:"3️⃣ Higher Chemistry Marks (3rd Priority)",c:`<p style="font-size:.84rem;line-height:1.7">If Maths and Physics are also equal, <strong>Chemistry marks</strong> decide. Chemistry also carries 50 marks.</p>`},{t:"4️⃣ HSC / Class 12 Board Marks (4th Priority)",c:`<p style="font-size:.84rem;line-height:1.7">If all CET subject marks are equal, the student with higher <strong>HSC aggregate marks in PCM subjects</strong> gets a better rank. Submit marksheet during CAP registration.</p>`},{t:"5️⃣ Age — Older Candidate (5th Priority)",c:`<p style="font-size:.84rem;line-height:1.7">Final criterion: the <strong>older candidate</strong> (by date of birth) ranks better. Extremely rare to reach this level — most ties resolved at Step 1 or 2.</p>`},{t:"⚙️ Normalization + Tie-Breaking Interaction",c:`<p style="font-size:.84rem;line-height:1.7">After normalization, two students from <em>different sessions</em> may get the same 7-decimal percentile even with different raw marks. Tie-breaking then uses <strong>actual raw marks</strong> — not normalized values. This is why a student who scored lower raw marks in a harder session can still tie with a higher raw scorer from an easier session, then be separated by subject marks.</p>`}];
+
+// ══════════════════════════════════════════════════════════
+// DARK MODE
+// ══════════════════════════════════════════════════════════
+let dark=false;
+function toggleDark(){dark=!dark;document.body.setAttribute('data-theme',dark?'dark':'');document.getElementById('dkT').classList.toggle('on',dark);document.getElementById('dkL').textContent=dark?'Light':'Dark';}
+
+// ══════════════════════════════════════════════════════════
+// PAGE NAV
+// ══════════════════════════════════════════════════════════
+function pg(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nt').forEach(t=>t.classList.remove('active'));const p=document.getElementById('page-'+id);if(p)p.classList.add('active');if(btn)btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+
+// ══════════════════════════════════════════════════════════
+// LANGUAGE
+// ══════════════════════════════════════════════════════════
+function switchLang(l){/* Nav labels stay dynamic - extend here if needed */}
+
+// ══════════════════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════════════════
+function showE(id,s){const e=document.getElementById(id+'e');if(e)e.classList.toggle('show',s);const i=document.getElementById(id);if(i)i.classList.toggle('err',s);}
+function syncR(inp,sl,max){const v=document.getElementById(inp).value;const s=document.getElementById(sl);if(s&&v!=='')s.value=Math.min(+v,max);}
+function fmtN(n){if(n>=100000)return(n/100000).toFixed(2)+'L';if(n>=1000)return n.toLocaleString('en-IN');return n;}
+function copyTxt(id){const el=document.getElementById(id);if(!el)return;navigator.clipboard.writeText(el.innerText).then(()=>{const b=event.target;b.textContent='✅ Copied!';setTimeout(()=>b.textContent='📋 Copy',1800)}).catch(()=>alert('Select & copy manually'));}
+
+// ══════════════════════════════════════════════════════════
+// CALCULATIONS
+// ══════════════════════════════════════════════════════════
+function calcPct(){
+  const p=+document.getElementById('p1').value,c=+document.getElementById('p2').value,m=+document.getElementById('p3').value;
+  let ok=true;
+  if(isNaN(p)||p<0||p>50){showE('p1',true);ok=false;}else showE('p1',false);
+  if(isNaN(c)||c<0||c>50){showE('p2',true);ok=false;}else showE('p2',false);
+  if(isNaN(m)||m<0||m>100){showE('p3',true);ok=false;}else showE('p3',false);
+  if(!ok)return;
+  const tot=p+c+m,pct=(tot/200)*100;
+  document.getElementById('rv1').textContent=p;document.getElementById('rv2').textContent=c;
+  document.getElementById('rv3').textContent=m;document.getElementById('rv4').textContent=tot;
+  document.getElementById('rv5').textContent=pct.toFixed(2)+'%';
+  document.getElementById('rvp').textContent=pct.toFixed(2)+'%';
+  setTimeout(()=>{document.getElementById('pctF').style.width=pct+'%';document.getElementById('sf1').style.width=(p/50*100)+'%';document.getElementById('sf2').style.width=(c/50*100)+'%';document.getElementById('sf3').style.width=m+'%';},60);
+  document.getElementById('sv1').textContent=(p/50*100).toFixed(0)+'%';document.getElementById('sv2').textContent=(c/50*100).toFixed(0)+'%';document.getElementById('sv3').textContent=m+'%';
+  const msg=pct>=95?'🌟 Outstanding! Top tier. Aim for 99+ percentile.':pct>=85?'⭐ Excellent! Good shot at top-ranked colleges.':pct>=75?'✅ Good. Competition determines your final percentile.':pct>=60?'👍 Average. Strengthen weak subjects.':'📚 Keep working — every mark moves your percentile significantly.';
+  document.getElementById('pctMsg').textContent=msg;
+  document.getElementById('pctR').classList.add('show');
+}
+
+function calcPer(){
+  const N=+document.getElementById('q1').value,r=+document.getElementById('q2').value;
+  let ok=true;
+  if(isNaN(N)||N<1){showE('q1',true);ok=false;}else showE('q1',false);
+  if(isNaN(r)||r<1||r>N){showE('q2',true);ok=false;}else showE('q2',false);
+  if(!ok)return;
+  const per=((N-r+1)/N)*100;
+  document.getElementById('qv1').textContent=N.toLocaleString('en-IN');document.getElementById('qv2').textContent=r.toLocaleString('en-IN');
+  document.getElementById('qv3').textContent=per.toFixed(7);document.getElementById('qvp').textContent=per.toFixed(2);
+  setTimeout(()=>document.getElementById('perF').style.width=Math.min(per,100)+'%',60);
+  document.getElementById('perMsg').innerHTML=`You scored better than <strong>${per.toFixed(2)}%</strong> of students. Approx. <strong>${(r-1).toLocaleString('en-IN')}</strong> students ranked below you.`;
+  document.getElementById('perR').classList.add('show');
+}
+
+function calcNorm(){
+  const raw=+document.getElementById('n1').value,below=+document.getElementById('n2').value,tot=+document.getElementById('n3').value;
+  let ok=true;
+  if(isNaN(raw)||raw<0||raw>200){showE('n1',true);ok=false;}else showE('n1',false);
+  if(isNaN(below)||below<1){showE('n2',true);ok=false;}else showE('n2',false);
+  if(isNaN(tot)||tot<1){showE('n3',true);ok=false;}else showE('n3',false);
+  if(!ok)return;
+  const per=(below/tot)*100;
+  document.getElementById('nv1').textContent=raw;document.getElementById('nv2').textContent=below.toLocaleString('en-IN');
+  document.getElementById('nv3').textContent=tot.toLocaleString('en-IN');document.getElementById('nv4').textContent=per.toFixed(7);
+  document.getElementById('normMsg').innerHTML=`Session Percentile = (${below}/${tot}) × 100 = <strong>${per.toFixed(7)}</strong>. ${per.toFixed(2)}% of candidates in your session scored ≤ you.`;
+  document.getElementById('normR').classList.add('show');
+}
+
+function calcRank(){
+  const per=+document.getElementById('r1').value,N=+document.getElementById('r2').value;
+  let ok=true;
+  if(isNaN(per)||per<0||per>100){showE('r1',true);ok=false;}else showE('r1',false);
+  if(isNaN(N)||N<1){showE('r2',true);ok=false;}else showE('r2',false);
+  if(!ok)return;
+  const rank=Math.round(((100-per)*N/100))+1,above=rank-1,below=Math.max(0,N-rank);
+  document.getElementById('rrv1').textContent=fmtN(rank);document.getElementById('rrv2').textContent=fmtN(above);document.getElementById('rrv3').textContent=fmtN(below);
+  const msg=per>=99.9?'🌟 Exceptional! COEP/VJTI CS well within reach.':per>=99?'⭐ Excellent! Top autonomous colleges open for most branches.':per>=97?'✅ Very good! Strong tier-2 autonomous colleges available.':per>=93?'👍 Aided/unaided colleges with good placements available.':'📚 Explore all CAP options. Many good colleges still accessible.';
+  document.getElementById('rankMsg').textContent=msg;
+  document.getElementById('rankR').classList.add('show');
+}
+
+// ══════════════════════════════════════════════════════════
+// EXAMPLES
+// ══════════════════════════════════════════════════════════
+function fillEg(t){
+  if(t==='pct'){['p1','p2','p3'].forEach((id,i)=>{document.getElementById(id).value=[40,35,80][i];});['ps1','ps2','ps3'].forEach((id,i)=>{document.getElementById(id).value=[40,35,80][i];});calcPct();}
+  else if(t==='per'){document.getElementById('q1').value=454069;document.getElementById('q2').value=5001;calcPer();}
+  else if(t==='norm'){document.getElementById('n1').value=154;document.getElementById('n2').value=2249;document.getElementById('n3').value=2249;calcNorm();}
+  else if(t==='rank'){document.getElementById('r1').value=99;document.getElementById('rs1').value=99;document.getElementById('r2').value=454069;calcRank();}
+}
+
+function resetPct(){['p1','p2','p3'].forEach(id=>{document.getElementById(id).value='';});['ps1','ps2','ps3'].forEach(id=>{document.getElementById(id).value=0;});document.getElementById('pctR').classList.remove('show');document.getElementById('pctF').style.width='0';['p1','p2','p3'].forEach(id=>showE(id,false));}
+
+// ══════════════════════════════════════════════════════════
+// LIVE UPDATES (calls proxy)
+// ══════════════════════════════════════════════════════════
+async function fetchLiveUpdates(){
+  const btn=document.getElementById('fetchBtn');
+  const loader=document.getElementById('liveLoader');
+  const panel=document.getElementById('livePanel');
+  const extra=document.getElementById('liveExtra');
+  const errDiv=document.getElementById('liveError');
+  const proxyUrl=document.getElementById('proxyUrl').value.trim()||'/api/chat';
+
+  btn.disabled=true;btn.innerHTML='🔄 Fetching… <span class="loader"></span>';
+  loader.style.display='block';panel.style.display='none';extra.style.display='none';errDiv.style.display='none';
+
+  try{
+    const res=await fetch(proxyUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'live_updates'})});
+    if(!res.ok)throw new Error(`Server returned ${res.status}. Check your proxy URL.`);
+    const data=await res.json();
+    const txt=data.result||'';
+    // Parse JSON from response
+    const jsonMatch=txt.match(/\{[\s\S]*\}/);
+    if(!jsonMatch)throw new Error('Could not parse response. Raw: '+txt.substring(0,200));
+    const d=JSON.parse(jsonMatch[0]);
+
+    // Populate notifications
+    const list=document.getElementById('notifList');list.innerHTML='';
+    (d.latestNotifications||[]).forEach(n=>{
+      const li=document.createElement('li');li.className='notif-item';
+      li.innerHTML=`<span class="notif-date">${n.date||''}</span><span>${n.title||n.course||'Update'} ${n.url?`<a href="${n.url}" target="_blank">↗</a>`:''}</span>`;
+      list.appendChild(li);
+    });
+
+    // Announcements
+    const aList=document.getElementById('announceList');aList.innerHTML='';
+    (d.importantAnnouncements||[]).forEach(a=>{const li=document.createElement('li');li.style.cssText='padding:7px 0;border-bottom:1px solid var(--bd)';li.textContent='📢 '+a;aList.appendChild(li);});
+
+    // Upcoming
+    const uList=document.getElementById('upcomingList');uList.innerHTML='';
+    (d.upcomingEvents||[]).forEach(u=>{const li=document.createElement('li');li.style.cssText='padding:7px 0;border-bottom:1px solid var(--bd)';li.textContent='⏳ '+u;uList.appendChild(li);});
+
+    document.getElementById('liveTime').textContent='Fetched: '+new Date().toLocaleTimeString('en-IN');
+    panel.style.display='block';extra.style.display='grid';
+
+  }catch(err){
+    errDiv.textContent='⚠️ Error: '+err.message+' — Make sure your proxy server is running and the URL is correct.';
+    errDiv.style.display='block';
+  }finally{
+    loader.style.display='none';btn.disabled=false;btn.innerHTML='🔄 Fetch Latest from CET Cell';
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+// AI CHATBOT
+// ══════════════════════════════════════════════════════════
+async function sendChat(){
+  const inp=document.getElementById('chatIn');const msg=inp.value.trim();if(!msg)return;
+  inp.value='';addMsg(msg,'user');
+  const load=addMsg('Searching cetcell.mahacet.org…','bot loading');
+  const proxyUrl=document.getElementById('proxyUrl')?.value.trim()||'/api/chat';
+  try{
+    const res=await fetch(proxyUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'ask_cet',userMessage:msg})});
+    if(!res.ok)throw new Error('Proxy error '+res.status+'. Run your proxy server first (see Quick Ref → Deploy Instructions).');
+    const data=await res.json();
+    load.remove();addMsg(data.result||'No response received.','bot');
+  }catch(e){load.remove();addMsg('⚠️ Could not reach proxy: '+e.message,'bot');}
+}
+function addMsg(text,cls){const box=document.getElementById('chatMsgs');const d=document.createElement('div');d.className='msg '+cls;d.textContent=text;box.appendChild(d);box.scrollTop=box.scrollHeight;return d;}
+function quickAsk(q){document.getElementById('chatIn').value=q;sendChat();}
+
+// ══════════════════════════════════════════════════════════
+// AI COURSE SUGGESTION
+// ══════════════════════════════════════════════════════════
+async function fetchAISuggestion(){
+  const per=+document.getElementById('cf1').value,cat=document.getElementById('cf2').value,interest=document.getElementById('cf3').value;
+  if(isNaN(per)||per<0||per>100){alert('Please enter a valid percentile first.');return;}
+  const btn=document.getElementById('aiSugBtn');const loader=document.getElementById('aiSugLoader');const result=document.getElementById('aiSugResult');
+  const proxyUrl=document.getElementById('proxyUrl')?.value.trim()||'/api/chat';
+  btn.disabled=true;loader.style.display='block';result.style.display='none';
+  const userMsg=`Percentile: ${per}, Category: ${cat}, Interest: ${interest}, Location: Maharashtra, India. MHT-CET PCM 2026. Suggest top 5 colleges and 3 best courses.`;
+  try{
+    const res=await fetch(proxyUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'college_suggest',userMessage:userMsg})});
+    if(!res.ok)throw new Error('Proxy error '+res.status);
+    const data=await res.json();
+    const txt=data.result||'';
+    const jm=txt.match(/\{[\s\S]*\}/);
+    if(jm){
+      const d=JSON.parse(jm[0]);
+      result.innerHTML=`<div class="n ns" style="margin-bottom:12px">🤖 <strong>AI Recommendation:</strong> ${d.recommendation||''}</div>
+      <div class="ct" style="margin-bottom:10px">🏫 Suggested Colleges</div>
+      <div class="clg-grid" style="margin-top:0">
+        ${(d.colleges||[]).map(c=>`<div class="clg-card"><div class="clg-name">${c.rank}. ${c.name}</div><div class="clg-info">📍 ${c.city} · ${c.type}</div><div class="clg-info">📚 ${(c.branches||[]).join(', ')}</div><div class="clg-info" style="margin-top:4px;color:var(--sc)">✅ ${c.whyGood}</div><span class="clg-cut">Cutoff: ${c.approxCutoff}</span>${c.website?` <a href="${c.website}" target="_blank" style="font-size:.74rem;display:block;margin-top:4px">🔗 Website ↗</a>`:''}</div>`).join('')}
+      </div>
+      <div class="n ni" style="margin-top:12px">📋 CAP Advice: ${d.capAdvice||''}</div>`;
+    }else{result.innerHTML=`<div class="n ni">${txt}</div>`;}
+    result.style.display='block';
+  }catch(e){result.innerHTML=`<div class="n ne">⚠️ ${e.message}</div>`;result.style.display='block';}
+  finally{btn.disabled=false;loader.style.display='none';}
+}
+
+// Static course suggestions (no API needed)
+function updateStaticSug(){
+  const per=+document.getElementById('cf1').value,interest=document.getElementById('cf3').value;
+  if(isNaN(per)||per===0)return;
+  const matched=COURSES.filter(c=>c.m.includes(interest));
+  const grid=document.getElementById('staticSug');
+  grid.innerHTML='<div class="sug-grid">'+matched.map(c=>{
+    const feasible=per>=c.co-2;
+    return `<div class="sug-card"><div class="sug-icon">${c.icon}</div><div class="sug-title">${c.t}</div><div class="sug-desc">${c.desc}</div><div style="margin-top:8px"><span class="badge ${feasible?'green':'gray'}">${feasible?'✅ Likely':'⚠️ Stretch'}</span></div><div style="font-size:.74rem;color:var(--tm);margin-top:4px">Avg Package: ${c.pkg} | Cutoff ~${c.co}</div></div>`;
+  }).join('')+'</div>';
+}
+
+// ══════════════════════════════════════════════════════════
+// COLLEGES
+// ══════════════════════════════════════════════════════════
+function buildColleges(){
+  const g=document.getElementById('clgGrid');if(!g)return;g.innerHTML='';
+  COLLEGES.forEach(c=>{
+    const d=document.createElement('div');d.className=`clg-card ${c.tier}`;d.dataset.cut=c.cut;
+    d.innerHTML=`<div class="clg-name">${c.n}</div><div class="clg-info">📍 ${c.c} · ${c.t}</div><div class="clg-info">📚 ${c.b}</div><span class="clg-cut">~${c.cut}+ Percentile</span>${c.u?`<div style="margin-top:6px;font-size:.74rem"><a href="${c.u}" target="_blank">🔗 Website ↗</a></div>`:''}`;
+    g.appendChild(d);
+  });
+}
+function filterClg(f){document.querySelectorAll('.clg-card').forEach(c=>{const cut=+c.dataset.cut;let show=true;if(f==='99+')show=cut>=99;else if(f==='97-99')show=cut>=97&&cut<99;else if(f==='93-97')show=cut>=93&&cut<97;else if(f==='below93')show=cut<93;c.style.display=show?'':'none';});}
+
+// ══════════════════════════════════════════════════════════
+// TOPPERS TABLE
+// ══════════════════════════════════════════════════════════
+function buildToppers(){const t=document.getElementById('topTbl');if(!t)return;TOPPERS.forEach((r,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${i+1}</td><td>${r[0]}</td><td>${r[1]}</td><td><span class="badge ${r[2]==='OBC'||r[2]==='SC'||r[2]==='ST'?'green':'blue'}">${r[2]}</span></td>`;t.appendChild(tr);});}
+
+// ══════════════════════════════════════════════════════════
+// ACCORDION
+// ══════════════════════════════════════════════════════════
+function buildAcc(){const c=document.getElementById('tieAcc');if(!c)return;TIERULES.forEach((r,i)=>{const d=document.createElement('div');d.className='ai';d.innerHTML=`<button class="ab${i===0?' open':''}" onclick="togAcc(this)"><span>${r.t}</span><span class="ar">▼</span></button><div class="ac2${i===0?' open':''}">${r.c}</div>`;c.appendChild(d);});}
+function togAcc(b){b.classList.toggle('open');b.nextElementSibling.classList.toggle('open');}
+
+// ══════════════════════════════════════════════════════════
+// TIE DEMO
+// ══════════════════════════════════════════════════════════
+function tieDemo(m){
+  const A=document.getElementById('vsA'),B=document.getElementById('vsB'),r=document.getElementById('tieRes');
+  A.classList.remove('win');B.classList.remove('win');
+  if(m==='math'){document.getElementById('mA').textContent=88;document.getElementById('mB').textContent=91;document.getElementById('pA').textContent=45;document.getElementById('pB').textContent=45;B.classList.add('win');r.className='n ns';r.innerHTML='🏆 <strong>Student B ranks better</strong> — Higher Maths (91>88). Criterion 1 applied.';}
+  else if(m==='phy'){document.getElementById('mA').textContent=91;document.getElementById('mB').textContent=91;document.getElementById('pA').textContent=48;document.getElementById('pB').textContent=44;A.classList.add('win');r.className='n ns';r.innerHTML='🏆 <strong>Student A ranks better</strong> — Maths equal (91=91), Physics higher (48>44). Criterion 2 applied.';}
+  else{document.getElementById('mA').textContent=91;document.getElementById('mB').textContent=91;document.getElementById('pA').textContent=45;document.getElementById('pB').textContent=45;r.className='n nw';r.innerHTML='⚖️ <strong>All PCM marks equal!</strong> Move to Criterion 4 (HSC marks) then Criterion 5 (Age).';}
+}
+
+// ══════════════════════════════════════════════════════════
+// CLASSROOM
+// ══════════════════════════════════════════════════════════
+function buildClassroom(){const g=document.getElementById('clrm');if(!g)return;for(let i=1;i<=100;i++){const d=document.createElement('div');d.className='dot';if(i===11){d.className+=' dh';d.textContent='YOU';}else if(i<=10){d.className+=' da';d.textContent=i;}else{d.className+=' dl';d.textContent=i;}g.appendChild(d);}}
+
+// ══════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{buildToppers();buildColleges();buildAcc();buildClassroom();});
+</script>
+</body>
+</html>

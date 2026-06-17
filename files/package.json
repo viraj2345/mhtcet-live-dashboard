@@ -1,0 +1,16 @@
+{
+  "name": "mhtcet-live-dashboard",
+  "version": "2.0.0",
+  "description": "MHT-CET PCM 2026 Live Student Dashboard with AI-powered CET Cell updates",
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "devDependencies": {
+    "vercel": "^34.0.0"
+  }
+}

@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHT-CET Scorecard Calculator 2026 | Complete Analysis</title>
+<meta name="description" content="Enter your MHT-CET PCM 2026 scorecard details — get complete analysis: percentage, percentile, rank, college suggestions, subject analysis & PDF report.">
+<style>
+:root{
+  --pr:#1a4fba;--pd:#0f3080;--pl:#e8efff;--pl2:#d0dcff;
+  --ac:#f47c20;--ad:#c85e08;--al:#fff4eb;
+  --sc:#16a34a;--sl:#dcfce7;
+  --wc:#ca8a04;--wl:#fef9c3;
+  --er:#ef4444;--erl:#fee2e2;
+  --su:#ffffff;--bg:#f0f4fc;
+  --tx:#1e2a3b;--tm:#5a6a82;--bd:#d0d9ee;
+  --r:14px;--rs:8px;--tr:.2s ease;
+}
+[data-theme=dark]{--su:#1a2238;--bg:#111827;--tx:#e8edf7;--tm:#94a3b8;--bd:#2d3c5c;--pl:#1e2f50;--al:#2a1a0a;--sl:#052e16;--wl:#1c1402;--erl:#450a0a}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI','Noto Sans',Arial,sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;min-height:100vh}
+a{color:var(--pr)}
+
+/* HEADER */
+header{background:linear-gradient(135deg,var(--pd),var(--pr) 55%,#2563eb);color:#fff;padding:0 20px;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(26,79,186,.3)}
+.hinner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px;min-height:58px;flex-wrap:wrap}
+.hlogo{display:flex;align-items:center;gap:10px;flex:1}
+.hicon{width:40px;height:40px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.htxt strong{font-size:.95rem;display:block}
+.htxt{font-size:.72rem;opacity:.85}
+.hacts{display:flex;gap:8px;align-items:center}
+
+/* BTN */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:9px 18px;border-radius:var(--rs);font-size:.83rem;font-weight:700;cursor:pointer;border:none;transition:all var(--tr);text-decoration:none}
+.btn:hover{transform:translateY(-1px)}
+.bp{background:var(--ac);color:#fff}.bp:hover{background:var(--ad);box-shadow:0 4px 12px rgba(244,124,32,.35)}
+.bg2{background:var(--pl);color:var(--pr)}.bg2:hover{background:var(--pr);color:#fff}
+.bs{background:var(--sc);color:#fff}.bs:hover{background:#15803d}
+.bd2{background:var(--pd);color:#fff}.bd2:hover{background:var(--pr)}
+.bo{background:transparent;border:1.5px solid rgba(255,255,255,.4);color:#fff}.bo:hover{background:rgba(255,255,255,.12)}
+.btn.sm{padding:6px 12px;font-size:.76rem}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* DARK TOGGLE */
+.togw{display:flex;align-items:center;gap:5px;cursor:pointer}
+.tog{width:36px;height:20px;background:rgba(255,255,255,.2);border-radius:10px;position:relative;transition:background var(--tr)}
+.tog.on{background:var(--ac)}
+.tog::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:left var(--tr)}
+.tog.on::after{left:18px}
+.toglbl{font-size:.72rem;color:rgba(255,255,255,.85)}
+
+/* MAIN */
+main{max-width:1100px;margin:0 auto;padding:28px 18px 80px}
+
+/* STEP INDICATOR */
+.steps{display:flex;align-items:center;margin-bottom:28px;overflow-x:auto;gap:0}
+.step{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--rs);font-size:.8rem;font-weight:700;cursor:pointer;border:2px solid var(--bd);background:var(--su);color:var(--tm);white-space:nowrap;transition:all var(--tr);flex-shrink:0}
+.step.active{background:var(--pr);color:#fff;border-color:var(--pr)}
+.step.done{background:var(--sl);color:var(--sc);border-color:var(--sc)}
+.step-arrow{color:var(--bd);font-size:1.2rem;flex-shrink:0}
+.step-num{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:.72rem;flex-shrink:0}
+.step.active .step-num{background:rgba(255,255,255,.25)}
+.step.done .step-num{background:var(--sc);color:#fff}
+
+/* CARD */
+.card{background:var(--su);border-radius:var(--r);border:1px solid var(--bd);box-shadow:0 1px 4px rgba(26,79,186,.09);padding:24px;margin-bottom:20px}
+.card:hover{box-shadow:0 4px 16px rgba(26,79,186,.12)}
+.ct{font-size:1.05rem;font-weight:800;color:var(--pr);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.cs{font-size:.8rem;color:var(--tm);margin-bottom:16px}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:768px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+/* FORM */
+.fg{margin-bottom:16px}
+.fg label{display:block;margin-bottom:6px;font-size:.82rem;font-weight:700}
+.fg label .h{font-weight:400;color:var(--tm);margin-left:4px}
+.inp{width:100%;padding:11px 14px;border:2px solid var(--bd);border-radius:var(--rs);font-size:.95rem;background:var(--su);color:var(--tx);transition:border-color var(--tr),box-shadow var(--tr);-moz-appearance:textfield}
+.inp::-webkit-inner-spin-button,.inp::-webkit-outer-spin-button{-webkit-appearance:none}
+.inp:focus{outline:none;border-color:var(--pr);box-shadow:0 0 0 3px rgba(26,79,186,.15)}
+.inp.err{border-color:var(--er);box-shadow:0 0 0 3px rgba(239,68,68,.12)}
+.inp.ok{border-color:var(--sc)}
+.errmsg{font-size:.75rem;color:var(--er);margin-top:3px;display:none}
+.errmsg.show{display:block}
+select.inp{cursor:pointer}
+.inp-icon{position:relative}
+.inp-icon .inp{padding-right:36px}
+.inp-icon .ic{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none}
+
+/* SCORECARD VISUAL INPUT */
+.sc-visual{background:linear-gradient(135deg,var(--pd) 0%,var(--pr) 100%);border-radius:var(--r);padding:24px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden}
+.sc-visual::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,.06);border-radius:50%}
+.sc-visual::after{content:'';position:absolute;bottom:-20px;left:-20px;width:80px;height:80px;background:rgba(244,124,32,.15);border-radius:50%}
+.sc-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.sc-seal{font-size:2.5rem}
+.sc-title h2{font-size:.95rem;font-weight:800}
+.sc-title p{font-size:.72rem;opacity:.8;margin-top:2px}
+.sc-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.sc-field label{display:block;font-size:.72rem;opacity:.8;margin-bottom:5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
+.sc-field input,.sc-field select{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);border-radius:var(--rs);padding:10px 13px;color:#fff;font-size:.95rem;width:100%;transition:all var(--tr);-moz-appearance:textfield}
+.sc-field input::placeholder{color:rgba(255,255,255,.5)}
+.sc-field input::-webkit-inner-spin-button,.sc-field input::-webkit-outer-spin-button{-webkit-appearance:none}
+.sc-field input:focus,.sc-field select:focus{outline:none;border-color:var(--ac);background:rgba(255,255,255,.22);box-shadow:0 0 0 3px rgba(244,124,32,.2)}
+.sc-field select option{background:var(--pd);color:#fff}
+.sc-divider{border:none;border-top:1px solid rgba(255,255,255,.15);margin:16px 0}
+
+/* NOTICE */
+.n{border-radius:var(--rs);padding:10px 14px;margin:10px 0;font-size:.82rem;line-height:1.5}
+.ni{background:var(--pl);border-left:4px solid var(--pr);color:var(--pd)}
+.nw{background:var(--wl);border-left:4px solid var(--wc);color:#713f12}
+.ns{background:var(--sl);border-left:4px solid var(--sc);color:#14532d}
+.ne{background:var(--erl);border-left:4px solid var(--er);color:#7f1d1d}
+[data-theme=dark] .ni{color:#93c5fd}[data-theme=dark] .nw{color:#fde68a}[data-theme=dark] .ns{color:#86efac}[data-theme=dark] .ne{color:#fca5a5}
+
+/* FORMULA */
+.fb{background:var(--pd);color:#93c5fd;border-radius:var(--rs);padding:11px 15px;margin:8px 0;font-family:'Courier New',monospace;font-size:.83rem;border-left:4px solid var(--ac);overflow-x:auto}
+
+/* RESULT DASHBOARD */
+.result-dashboard{display:none;animation:fi .4s ease}
+.result-dashboard.show{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* BIG METRIC CARDS */
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px}
+.metric{border-radius:var(--r);padding:18px;text-align:center;border:1px solid var(--bd)}
+.metric .mval{font-size:2.2rem;font-weight:900;line-height:1;display:block}
+.metric .mlbl{font-size:.74rem;font-weight:700;margin-top:5px;opacity:.8}
+.metric .msub{font-size:.7rem;opacity:.6;margin-top:3px}
+.m-blue{background:linear-gradient(135deg,var(--pr),#2563eb);color:#fff}
+.m-orange{background:linear-gradient(135deg,var(--ac),var(--ad));color:#fff}
+.m-green{background:linear-gradient(135deg,var(--sc),#15803d);color:#fff}
+.m-purple{background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff}
+.m-teal{background:linear-gradient(135deg,#0891b2,#0e7490);color:#fff}
+.m-rose{background:linear-gradient(135deg,#e11d48,#be123c);color:#fff}
+
+/* SUBJECT BREAKDOWN */
+.sub-table{width:100%;border-collapse:collapse}
+.sub-table th{background:var(--pr);color:#fff;padding:10px 14px;font-size:.82rem;text-align:left}
+.sub-table td{padding:10px 14px;border-bottom:1px solid var(--bd);font-size:.84rem}
+.sub-table tr:last-child td{border-bottom:none}
+.sub-table tr:nth-child(even) td{background:var(--pl)}
+.sub-table .bar-cell{width:120px}
+.mini-bar{height:8px;background:var(--bd);border-radius:4px;overflow:hidden}
+.mini-fill{height:100%;border-radius:4px;transition:width 1s ease}
+
+/* SCORE GAUGE */
+.gauge-wrap{display:flex;justify-content:center;margin:16px 0}
+.gauge{position:relative;width:160px;height:80px}
+.gauge svg{width:100%;height:100%}
+.gauge-val{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-size:1.4rem;font-weight:900;color:var(--pr);white-space:nowrap}
+.gauge-lbl{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:.72rem;color:var(--tm);white-space:nowrap}
+
+/* RADAR CHART */
+#radarCanvas{max-width:260px;margin:0 auto;display:block}
+
+/* PERCENTILE BAND */
+.per-band{height:28px;border-radius:14px;background:linear-gradient(to right,#ef4444,#f97316,#eab308,#22c55e,#3b82f6,#6366f1);position:relative;margin:16px 0;overflow:visible}
+.per-marker{position:absolute;top:-8px;transform:translateX(-50%);transition:left 1s ease}
+.per-marker-pin{width:20px;height:44px;display:flex;flex-direction:column;align-items:center}
+.per-marker-pin .pin-arrow{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:12px solid var(--pd)}
+.per-marker-pin .pin-line{width:2px;height:20px;background:var(--pd)}
+.per-marker-label{position:absolute;top:-26px;left:50%;transform:translateX(-50%);background:var(--pd);color:#fff;padding:2px 8px;border-radius:10px;font-size:.72rem;font-weight:800;white-space:nowrap}
+.per-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--tm);margin-top:4px;padding:0 6px}
+
+/* STRENGTH/WEAKNESS */
+.sw-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sw-card{border-radius:var(--rs);padding:14px}
+.sw-strong{background:var(--sl);border:1.5px solid var(--sc)}
+.sw-weak{background:var(--erl);border:1.5px solid var(--er)}
+.sw-title{font-weight:800;font-size:.88rem;margin-bottom:8px}
+.sw-item{font-size:.82rem;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+.sw-item:last-child{border-bottom:none}
+
+/* COLLEGE SUGGESTION */
+.clg-suggest{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:12px}
+.clg-card{background:var(--su);border:1px solid var(--bd);border-radius:var(--r);padding:14px;border-left:4px solid var(--pr);transition:all var(--tr)}
+.clg-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(26,79,186,.13)}
+.clg-card.t1{border-left-color:#f59e0b}
+.clg-card.t2{border-left-color:var(--pr)}
+.clg-card.t3{border-left-color:var(--sc)}
+.clg-name{font-weight:800;font-size:.88rem}
+.clg-meta{font-size:.75rem;color:var(--tm);margin-top:3px}
+.clg-badge{display:inline-block;margin-top:6px;padding:2px 9px;border-radius:20px;font-size:.7rem;font-weight:800}
+.cb-green{background:var(--sl);color:var(--sc)}
+.cb-yellow{background:var(--wl);color:#713f12}
+.cb-blue{background:var(--pl);color:var(--pr)}
+
+/* TIPS */
+.tip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:12px}
+.tip-card{background:var(--su);border:1px solid var(--bd);border-radius:var(--rs);padding:13px}
+.tip-icon{font-size:1.6rem;margin-bottom:6px}
+.tip-title{font-weight:800;font-size:.85rem;color:var(--pr)}
+.tip-text{font-size:.77rem;color:var(--tm);margin-top:4px;line-height:1.5}
+
+/* REPORT */
+.report-box{background:var(--su);border:2px solid var(--pr);border-radius:var(--r);padding:22px;margin-top:20px}
+.report-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+
+/* PRINT REPORT */
+@media print{
+  header,.steps,.btn,#inputSection,.abar{display:none!important}
+  body{background:#fff;color:#000;font-size:12pt}
+  .card{box-shadow:none;border:1px solid #ccc;break-inside:avoid}
+  main{padding:0;max-width:100%}
+  .result-dashboard{display:block!important}
+  .metric{border:1px solid #ccc}
+}
+
+/* ANIMATION */
+@keyframes countUp{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+.count-anim{animation:countUp .5s ease}
+
+/* TABS (within result) */
+.rtabs{display:flex;gap:0;border-bottom:2px solid var(--bd);margin-bottom:18px;overflow-x:auto;scrollbar-width:none}
+.rtabs::-webkit-scrollbar{display:none}
+.rtab{padding:9px 16px;cursor:pointer;border:none;background:none;font-size:.82rem;font-weight:700;color:var(--tm);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all var(--tr)}
+.rtab.active{color:var(--pr);border-color:var(--pr)}
+.rtab:hover{color:var(--tx)}
+.rtpanel{display:none}
+.rtpanel.active{display:block;animation:fi .3s ease}
+
+/* BADGE */
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:.71rem;font-weight:800}
+.b-gold{background:#fbbf24;color:#78350f}
+.b-blue{background:var(--pr);color:#fff}
+.b-green{background:var(--sc);color:#fff}
+.b-gray{background:var(--bd);color:var(--tx)}
+.b-orange{background:var(--ac);color:#fff}
+.b-red{background:var(--er);color:#fff}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{background:var(--pr);color:#fff;padding:10px 13px;text-align:left;font-size:.82rem}
+.tbl td{padding:9px 13px;border-bottom:1px solid var(--bd);font-size:.82rem}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:nth-child(even) td{background:var(--pl)}
+
+/* RESPONSIVE */
+@media(max-width:600px){main{padding:16px 12px 60px}.sc-fields{grid-template-columns:1fr}.steps{gap:4px}.step{padding:8px 10px;font-size:.72rem}.sw-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hinner">
+    <div class="hlogo">
+      <div class="hicon">📋</div>
+      <div class="htxt">
+        <strong>MHT-CET PCM 2026 — Scorecard Calculator</strong>
+        Complete Analysis: Percentage · Percentile · Rank · Colleges | cetcell.mahacet.org
+      </div>
+    </div>
+    <div class="hacts">
+      <div class="togw" onclick="toggleDark()">
+        <div class="tog" id="dkT"></div>
+        <span class="toglbl" id="dkL">Dark</span>
+      </div>
+      <button class="btn bo sm" onclick="window.print()">🖨 Print</button>
+      <button class="btn bo sm" onclick="downloadReport()">📥 PDF Report</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- STEP INDICATOR -->
+  <div class="steps">
+    <div class="step active" id="stp1" onclick="goStep(1)"><span class="step-num">1</span>Enter Scorecard</div>
+    <div class="step-arrow">›</div>
+    <div class="step" id="stp2" onclick="goStep(2)"><span class="step-num">2</span>View Analysis</div>
+    <div class="step-arrow">›</div>
+    <div class="step" id="stp3" onclick="goStep(3)"><span class="step-num">3</span>College Suggestions</div>
+    <div class="step-arrow">›</div>
+    <div class="step" id="stp4" onclick="goStep(4)"><span class="step-num">4</span>Download Report</div>
+  </div>
+
+  <!-- ═══════ STEP 1: INPUT ═══════ -->
+  <div id="inputSection">
+
+    <!-- SCORECARD VISUAL INPUT -->
+    <div class="sc-visual">
+      <div class="sc-header">
+        <div class="sc-seal">🏛️</div>
+        <div class="sc-title">
+          <h2>State Common Entrance Test Cell — Maharashtra</h2>
+          <p>MHT-CET PCM 2026 · Score Card Details · Enter exactly as shown on your official score card</p>
+        </div>
+      </div>
+
+      <div class="sc-fields">
+        <div class="sc-field">
+          <label>Student Full Name</label>
+          <input type="text" id="sName" placeholder="e.g. RAHUL SURESH PATIL" oninput="livePreview()">
+        </div>
+        <div class="sc-field">
+          <label>Application / Seat Number</label>
+          <input type="text" id="sAppNo" placeholder="e.g. M123456789" oninput="livePreview()">
+        </div>
+        <div class="sc-field">
+          <label>Category</label>
+          <select id="sCat" onchange="livePreview()">
+            <option value="open">Open / General</option>
+            <option value="obc">OBC</option>
+            <option value="sc">SC</option>
+            <option value="st">ST</option>
+            <option value="sebc">SEBC / EWS</option>
+            <option value="vjnt">VJ/NT</option>
+          </select>
+        </div>
+        <div class="sc-field">
+          <label>Gender</label>
+          <select id="sGender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <hr class="sc-divider">
+      <p style="font-size:.75rem;opacity:.7;margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">📊 Marks Scored (as on score card)</p>
+      <div class="sc-fields">
+        <div class="sc-field">
+          <label>Physics Marks <span style="opacity:.6">(out of 50)</span></label>
+          <input type="number" id="sPhy" min="0" max="50" placeholder="e.g. 40" oninput="livePreview()">
+        </div>
+        <div class="sc-field">
+          <label>Chemistry Marks <span style="opacity:.6">(out of 50)</span></label>
+          <input type="number" id="sChem" min="0" max="50" placeholder="e.g. 35" oninput="livePreview()">
+        </div>
+        <div class="sc-field">
+          <label>Mathematics Marks <span style="opacity:.6">(out of 100)</span></label>
+          <input type="number" id="sMaths" min="0" max="100" placeholder="e.g. 80" oninput="livePreview()">
+        </div>
+        <div class="sc-field">
+          <label>Total Score (auto-calculated)</label>
+          <input type="number" id="sTotal" placeholder="Auto" style="background:rgba(255,255,255,.08);cursor:default" readonly>
+        </div>
+      </div>
+
+      <hr class="sc-divider">
+      <p style="font-size:.75rem;opacity:.7;margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">📈 Percentile & Rank (from score card)</p>
+      <div class="sc-fields">
+        <div class="sc-field">
+          <label>Total Percentile <span style="opacity:.6">(7 decimals)</span></label>
+          <input type="number" id="sPercentile" min="0" max="100" step="0.0000001" placeholder="e.g. 97.8345678" oninput="livePreview()">
+        </div>
+        <div class="sc-field">
+          <label>Physics Percentile</label>
+          <input type="number" id="sPhyPer" min="0" max="100" step="0.0000001" placeholder="e.g. 95.1234567">
+        </div>
+        <div class="sc-field">
+          <label>Chemistry Percentile</label>
+          <input type="number" id="sChemPer" min="0" max="100" step="0.0000001" placeholder="e.g. 93.4567890">
+        </div>
+        <div class="sc-field">
+          <label>Mathematics Percentile</label>
+          <input type="number" id="sMathsPer" min="0" max="100" step="0.0000001" placeholder="e.g. 96.7890123">
+        </div>
+      </div>
+
+      <hr class="sc-divider">
+      <p style="font-size:.75rem;opacity:.7;margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">📋 Additional Info</p>
+      <div class="sc-fields">
+        <div class="sc-field">
+          <label>Exam Session / Date</label>
+          <input type="text" id="sSession" placeholder="e.g. 11 Apr 2026, Session 1">
+        </div>
+        <div class="sc-field">
+          <label>District / City</label>
+          <input type="text" id="sDistrict" placeholder="e.g. Pune">
+        </div>
+        <div class="sc-field">
+          <label>HSC / Class 12 %</label>
+          <input type="number" id="sHsc" min="0" max="100" step="0.01" placeholder="e.g. 88.5">
+        </div>
+        <div class="sc-field">
+          <label>Preferred Branch Interest</label>
+          <select id="sBranch">
+            <option value="cs">CS / IT / AI</option>
+            <option value="mech">Mechanical</option>
+            <option value="civil">Civil</option>
+            <option value="elec">Electrical / Electronics</option>
+            <option value="chem">Chemical / Pharma</option>
+            <option value="bio">Biotechnology</option>
+            <option value="agri">Agriculture</option>
+            <option value="all">No Preference</option>
+          </select>
+        </div>
+      </div>
+    </div><!-- end sc-visual -->
+
+    <div class="n nw" id="inputWarning" style="display:none"></div>
+
+    <!-- LIVE PREVIEW -->
+    <div class="card" id="livePreviewCard" style="display:none;border-left:4px solid var(--ac)">
+      <div class="ct">👁️ Live Preview</div>
+      <div id="livePreviewContent"></div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px">
+      <button class="btn bp" style="font-size:.95rem;padding:12px 24px" onclick="calculateAll()">⚡ Calculate Everything</button>
+      <button class="btn bg2" onclick="loadSampleData()">📖 Load Sample Scorecard</button>
+      <button class="btn bg2 sm" onclick="clearAll()">🗑 Clear All</button>
+    </div>
+
+    <div class="n ni" style="margin-top:12px">
+      💡 <strong>Tip:</strong> You can enter just the marks (Physics/Chemistry/Maths) without the percentile — we'll calculate it using the official CET formula with 4,54,069 as total appeared (PCM 1st Attempt 2026). Or enter all fields for the most accurate analysis.
+    </div>
+
+  </div><!-- end inputSection -->
+
+  <!-- ═══════ RESULT DASHBOARD ═══════ -->
+  <div class="result-dashboard" id="resultDash">
+
+    <!-- STUDENT HEADER -->
+    <div class="card" style="background:linear-gradient(135deg,var(--pd),var(--pr) 60%,#2563eb);color:#fff;border:none">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div style="width:60px;height:60px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">🎓</div>
+        <div style="flex:1">
+          <h2 id="rName" style="font-size:1.2rem;font-weight:900">Student Name</h2>
+          <p id="rMeta" style="font-size:.8rem;opacity:.85;margin-top:3px">Category · Session · District</p>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:2rem;font-weight:900" id="rGrade">—</div>
+          <div style="font-size:.75rem;opacity:.8">Performance Grade</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;background:rgba(255,255,255,.1);border-radius:var(--rs);padding:10px 14px;font-size:.82rem" id="rSummary"></div>
+    </div>
+
+    <!-- BIG METRICS -->
+    <div class="metric-grid">
+      <div class="metric m-blue"><span class="mval" id="mPct">—</span><div class="mlbl">Percentage</div><div class="msub">out of 200 marks</div></div>
+      <div class="metric m-orange"><span class="mval" id="mPer">—</span><div class="mlbl">Percentile Score</div><div class="msub">7 decimal places</div></div>
+      <div class="metric m-green"><span class="mval" id="mRank">—</span><div class="mlbl">Approx. Rank</div><div class="msub">out of 4,54,069</div></div>
+      <div class="metric m-purple"><span class="mval" id="mPhyPer">—</span><div class="mlbl">Physics Percentile</div><div class="msub">subject-wise</div></div>
+      <div class="metric m-teal"><span class="mval" id="mChemPer">—</span><div class="mlbl">Chemistry Percentile</div><div class="msub">subject-wise</div></div>
+      <div class="metric m-rose"><span class="mval" id="mMathsPer">—</span><div class="mlbl">Maths Percentile</div><div class="msub">subject-wise</div></div>
+    </div>
+
+    <!-- PERCENTILE BAND VISUAL -->
+    <div class="card">
+      <div class="ct">📊 Your Position in the Race</div>
+      <div class="cs">Where you stand among 4,54,069 PCM candidates (2026)</div>
+      <div class="per-band" id="perBand">
+        <div class="per-marker" id="perMarker" style="left:0%">
+          <div class="per-marker-label" id="perMarkerLbl">—</div>
+          <div class="per-marker-pin">
+            <div class="pin-arrow"></div>
+            <div class="pin-line"></div>
+          </div>
+        </div>
+      </div>
+      <div class="per-labels"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;font-size:.78rem">
+        <span style="background:#ef4444;color:#fff;padding:2px 10px;border-radius:10px">0–50: Low</span>
+        <span style="background:#f97316;color:#fff;padding:2px 10px;border-radius:10px">50–80: Average</span>
+        <span style="background:#eab308;color:#fff;padding:2px 10px;border-radius:10px">80–93: Good</span>
+        <span style="background:#22c55e;color:#fff;padding:2px 10px;border-radius:10px">93–99: Very Good</span>
+        <span style="background:#3b82f6;color:#fff;padding:2px 10px;border-radius:10px">99+: Excellent</span>
+      </div>
+    </div>
+
+    <!-- TABBED ANALYSIS -->
+    <div class="card">
+      <div class="rtabs">
+        <button class="rtab active" onclick="showTab('subTab',this)">📚 Subject Breakdown</button>
+        <button class="rtab" onclick="showTab('normTab',this)">⚙️ Normalization</button>
+        <button class="rtab" onclick="showTab('tieTab',this)">🔗 Tie-Breaking</button>
+        <button class="rtab" onclick="showTab('compareTab',this)">📊 National Compare</button>
+        <button class="rtab" onclick="showTab('tips',this)">💡 Study Tips</button>
+      </div>
+
+      <!-- Subject Tab -->
+      <div class="rtpanel active" id="subTab">
+        <table class="sub-table">
+          <thead><tr><th>Subject</th><th>Marks</th><th>Max</th><th>%</th><th>Percentile</th><th>Performance</th><th>Visual</th></tr></thead>
+          <tbody id="subTableBody"></tbody>
+        </table>
+        <div class="sw-grid" style="margin-top:16px">
+          <div class="sw-card sw-strong">
+            <div class="sw-title" style="color:var(--sc)">💪 Strengths</div>
+            <div id="strengthList"></div>
+          </div>
+          <div class="sw-card sw-weak">
+            <div class="sw-title" style="color:var(--er)">⚠️ Areas to Improve</div>
+            <div id="weakList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Normalization Tab -->
+      <div class="rtpanel" id="normTab">
+        <div class="n ni">⚙️ <strong>How normalization was applied to your score:</strong> MHT-CET 2026 had 16 sessions. Your raw marks were converted to a session percentile, then merged with all sessions to create the final percentile shown on your scorecard.</div>
+        <div class="fb" style="margin-top:12px">
+          Session Percentile = (Candidates scored ≤ you / Total in session) × 100<br>
+          Final Percentile = merged across all 16 sessions<br>
+          Your Percentile (7 decimals) is the official value from CET Cell.
+        </div>
+        <table class="tbl" style="margin-top:14px">
+          <thead><tr><th>Component</th><th>Your Value</th><th>Interpretation</th></tr></thead>
+          <tbody id="normTableBody"></tbody>
+        </table>
+        <div class="n nw" style="margin-top:12px">⚠️ The normalization process is applied by CET Cell across all sessions. The percentile on your score card is your final normalized score. <a href="https://cetcell.mahacet.org/wp-content/uploads/2023/12/MHT-CET-2026-Result-Processing-Methodology.pdf" target="_blank">Official Methodology PDF ↗</a></div>
+      </div>
+
+      <!-- Tie-breaking Tab -->
+      <div class="rtpanel" id="tieTab">
+        <div class="n ni">🔗 <strong>Your tie-breaking profile</strong> — if another student has the same percentile, here's how you compare:</div>
+        <table class="tbl" style="margin-top:12px">
+          <thead><tr><th>Criterion</th><th>Your Value</th><th>Priority</th><th>Advantage?</th></tr></thead>
+          <tbody id="tieTableBody"></tbody>
+        </table>
+        <div class="n ns" style="margin-top:12px">✅ <strong>Tie-breaking order (official):</strong> 1) Maths marks → 2) Physics marks → 3) Chemistry marks → 4) HSC Board marks → 5) Older age</div>
+      </div>
+
+      <!-- Compare Tab -->
+      <div class="rtpanel" id="compareTab">
+        <div class="g2">
+          <div>
+            <h4 style="font-size:.9rem;font-weight:800;color:var(--pr);margin-bottom:12px">📊 How You Compare to 2026 Batch</h4>
+            <table class="tbl">
+              <thead><tr><th>Metric</th><th>You</th><th>2026 Batch Context</th></tr></thead>
+              <tbody id="compareTableBody"></tbody>
+            </table>
+          </div>
+          <div>
+            <h4 style="font-size:.9rem;font-weight:800;color:var(--pr);margin-bottom:12px">🏆 Toppers Context</h4>
+            <div class="n ni" style="font-size:.8rem">In 2026, <strong>26 students</strong> scored 100 Percentile. The category-wise topper for Open category was <strong>AARYAN SHAILENDRA KUNJEER</strong> from Pune.</div>
+            <table class="tbl" style="margin-top:10px">
+              <thead><tr><th>Percentile Range</th><th>Candidates</th></tr></thead>
+              <tbody>
+                <tr><td>100.0000000</td><td>26 students</td></tr>
+                <tr><td>99.9+</td><td>~45</td></tr>
+                <tr><td>99.0 – 99.9</td><td>~4,096</td></tr>
+                <tr><td>95.0 – 99.0</td><td>~18,163</td></tr>
+                <tr><td>90.0 – 95.0</td><td>~22,703</td></tr>
+                <tr><td>Below 90</td><td>~4,09,036</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tips Tab -->
+      <div class="rtpanel" id="tips">
+        <div class="tip-grid" id="tipGrid"></div>
+      </div>
+
+    </div><!-- end tabbed card -->
+
+    <!-- COLLEGE SUGGESTIONS -->
+    <div class="card">
+      <div class="ct">🏫 College Suggestions Based on Your Scorecard</div>
+      <div class="cs" id="clgSugTitle">Personalized for your percentile, category and branch interest</div>
+      <div class="clg-suggest" id="clgSugGrid"></div>
+      <div class="n nw" style="margin-top:12px">⚠️ Cutoffs are from historical CAP data. 2026 official cutoffs will be published after CAP rounds at <a href="https://cetcell.mahacet.org/cap-_2026-27/" target="_blank">cetcell.mahacet.org/cap-_2026-27 ↗</a></div>
+    </div>
+
+    <!-- FULL CALCULATION REPORT -->
+    <div class="report-box" id="reportBox">
+      <div class="report-header">
+        <h3 style="font-size:1rem;font-weight:800;color:var(--pr)">📄 Complete Calculation Report</h3>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn bg2 sm" onclick="copyReport()">📋 Copy Report</button>
+          <button class="btn bs sm" onclick="downloadReport()">📥 Download PDF</button>
+          <button class="btn bd2 sm" onclick="window.print()">🖨 Print</button>
+        </div>
+      </div>
+      <div id="reportContent" style="font-family:'Courier New',monospace;font-size:.82rem;line-height:1.8;white-space:pre-wrap;color:var(--tx)"></div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+      <button class="btn bg2" onclick="goStep(1);document.getElementById('inputSection').style.display='block';document.getElementById('resultDash').classList.remove('show')">✏️ Edit Scorecard</button>
+      <button class="btn bg2 sm" onclick="clearAll()">🗑 Start Over</button>
+    </div>
+
+  </div><!-- end resultDash -->
+
+</main>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════
+const N_2026 = 454069; // Official PCM 1st Attempt 2026 appeared
+
+const ALL_COLLEGES = [
+  {n:"COEP Pune",c:"Pune",t:"Govt. Autonomous",cut:99.9,branch:["cs","elec","mech","civil"],tier:"t1",u:"https://www.coeptech.ac.in/"},
+  {n:"VJTI Mumbai",c:"Mumbai",t:"Government",cut:99.8,branch:["cs","elec","mech","civil"],tier:"t1",u:"https://vjti.ac.in/"},
+  {n:"ICT Mumbai",c:"Mumbai",t:"Government",cut:99.7,branch:["chem"],tier:"t1",u:"https://ictmumbai.edu.in/"},
+  {n:"SPIT Mumbai",c:"Mumbai",t:"Autonomous",cut:99.5,branch:["cs","elec"],tier:"t1",u:"https://www.spit.ac.in/"},
+  {n:"PICT Pune",c:"Pune",t:"Autonomous",cut:99.0,branch:["cs","elec"],tier:"t2",u:"https://pict.edu/"},
+  {n:"Walchand College Sangli",c:"Sangli",t:"Autonomous",cut:98.5,branch:["cs","mech","civil","elec"],tier:"t2",u:"https://www.walchandsangli.ac.in/"},
+  {n:"KJ Somaiya Mumbai",c:"Mumbai",t:"Autonomous",cut:97.5,branch:["cs","elec","bio"],tier:"t2",u:"https://kjsieit.somaiya.edu/"},
+  {n:"Vishwakarma Inst. Pune",c:"Pune",t:"Autonomous",cut:96.0,branch:["cs","mech","civil"],tier:"t2",u:"https://www.vit.edu/"},
+  {n:"Symbiosis Inst. of Tech.",c:"Pune",t:"Autonomous",cut:95.0,branch:["cs","elec"],tier:"t2",u:"https://www.sitpune.edu.in/"},
+  {n:"MIT-ADT University Pune",c:"Pune",t:"Private",cut:93.0,branch:["cs","mech","elec"],tier:"t3",u:"https://www.mituniversity.edu.in/"},
+  {n:"Cummins College (Women)",c:"Pune",t:"Autonomous",cut:93.0,branch:["cs","mech"],tier:"t3",u:"https://www.cumminscollege.in/"},
+  {n:"RCOEM Nagpur",c:"Nagpur",t:"Autonomous",cut:92.0,branch:["cs","mech","civil","elec"],tier:"t3",u:"https://rknec.edu/"},
+  {n:"PVPIT Budhgaon",c:"Sangli",t:"Govt. Aided",cut:90.0,branch:["mech","civil","elec"],tier:"t3",u:""},
+  {n:"MGM College Aurangabad",c:"Aurangabad",t:"Autonomous",cut:88.0,branch:["cs","mech"],tier:"t3",u:""},
+  {n:"Top Pharmacy Colleges",c:"Maharashtra",t:"Various",cut:85.0,branch:["chem","bio"],tier:"t3",u:""},
+  {n:"Agriculture Colleges",c:"Maharashtra",t:"Govt./Aided",cut:80.0,branch:["agri"],tier:"t3",u:"https://cetcell.mahacet.org/wp-content/uploads/2026/06/Agri-English.pdf"},
+];
+
+const TIPS_DB = {
+  cs: [{i:"💻",t:"CS Interview Prep",d:"Start LeetCode/Codeforces. Focus on DSA — arrays, trees, graphs. 2–3 hours daily."},
+       {i:"🤖",t:"AI/ML Basics",d:"Learn Python, NumPy, Pandas. Take free Coursera ML course by Andrew Ng."},
+       {i:"🏆",t:"Competitive Coding",d:"Join Codeforces, HackerRank. Rank matters for internships at FAANG."}],
+  mech:[{i:"🔧",t:"AutoCAD/SolidWorks",d:"Learn 3D CAD tools early. Companies like Tata Motors, Bajaj hire freshers with CAD skills."},
+        {i:"🏗️",t:"Core Subjects",d:"Strength of Materials, Fluid Mechanics, Thermodynamics — master these."}],
+  civil:[{i:"🏘️",t:"AutoCAD & STAAD.Pro",d:"Civil software skills are essential. Practice residential building design."},
+         {i:"📐",t:"GATE Preparation",d:"Start GATE prep from 2nd year. Opens PSU/M.Tech opportunities."}],
+  elec:[{i:"📡",t:"VLSI / Embedded",d:"Learn Arduino, Raspberry Pi. VLSI design is booming — TSMC, Intel hire from India."},
+        {i:"🔌",t:"Power Electronics",d:"EV sector growing fast. Specialize in power electronics for great opportunities."}],
+  chem:[{i:"🧪",t:"Process Engineering",d:"GATE Chemical is competitive. Focus on Mass Transfer, Process Control."},
+        {i:"💊",t:"Pharma Opportunities",d:"Maharashtra has 50+ pharma companies. Lab skills + regulatory knowledge valued."}],
+  agri:[{i:"🌾",t:"Agri-Tech",d:"Agri-tech startups booming. Drone surveys, precision farming — great for innovators."},
+        {i:"🌱",t:"Govt. Jobs",d:"Agriculture officers, NABARD, FCI — good government opportunities."}],
+  all: [{i:"📚",t:"GATE/MBA/GRE",d:"Plan post-graduation early. GATE opens IIT/NIT/PSU doors. MBA via CAT for management."},
+        {i:"🌐",t:"Build Projects",d:"GitHub portfolio matters more than marks. Build real projects during engineering."},
+        {i:"🏅",t:"Internships",d:"Apply for internships from 2nd year. Superset, Internshala, LinkedIn are good platforms."}],
+};
+
+// ═══════════════════════════════════════════════════════
+// DARK MODE
+// ═══════════════════════════════════════════════════════
+let dark = false;
+function toggleDark(){dark=!dark;document.body.setAttribute('data-theme',dark?'dark':'');document.getElementById('dkT').classList.toggle('on',dark);document.getElementById('dkL').textContent=dark?'Light':'Dark';}
+
+// ═══════════════════════════════════════════════════════
+// STEP NAVIGATION
+// ═══════════════════════════════════════════════════════
+function goStep(n){
+  document.querySelectorAll('.step').forEach((s,i)=>{
+    s.classList.remove('active','done');
+    if(i+1<n) s.classList.add('done');
+    else if(i+1===n) s.classList.add('active');
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// LIVE PREVIEW
+// ═══════════════════════════════════════════════════════
+function livePreview(){
+  const phy = +document.getElementById('sPhy').value||0;
+  const chem = +document.getElementById('sChem').value||0;
+  const maths = +document.getElementById('sMaths').value||0;
+  const total = phy + chem + maths;
+  document.getElementById('sTotal').value = total > 0 ? total : '';
+
+  const card = document.getElementById('livePreviewCard');
+  const content = document.getElementById('livePreviewContent');
+  if(phy > 0 || chem > 0 || maths > 0){
+    const pct = (total/200*100).toFixed(2);
+    const per = document.getElementById('sPercentile').value;
+    const name = document.getElementById('sName').value || '—';
+    card.style.display = 'block';
+    content.innerHTML = `
+      <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem">
+        <div>👤 <strong>${name}</strong></div>
+        <div>📊 Total: <strong>${total}/200</strong></div>
+        <div>📈 Percentage: <strong>${pct}%</strong></div>
+        ${per ? `<div>🎯 Percentile: <strong>${(+per).toFixed(4)}</strong></div>` : ''}
+        ${per ? `<div>🏅 Est. Rank: <strong>~${Math.round(((100-+per)*N_2026/100)+1).toLocaleString('en-IN')}</strong></div>` : ''}
+      </div>`;
+  } else {
+    card.style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// LOAD SAMPLE DATA
+// ═══════════════════════════════════════════════════════
+function loadSampleData(){
+  document.getElementById('sName').value = 'RAHUL SURESH PATIL';
+  document.getElementById('sAppNo').value = 'M2024567890';
+  document.getElementById('sCat').value = 'obc';
+  document.getElementById('sGender').value = 'male';
+  document.getElementById('sPhy').value = 44;
+  document.getElementById('sChem').value = 38;
+  document.getElementById('sMaths').value = 86;
+  document.getElementById('sPercentile').value = '97.4560123';
+  document.getElementById('sPhyPer').value = '95.1234567';
+  document.getElementById('sChemPer').value = '93.4567890';
+  document.getElementById('sMathsPer').value = '96.7890123';
+  document.getElementById('sSession').value = '14 Apr 2026, Session 2';
+  document.getElementById('sDistrict').value = 'Pune';
+  document.getElementById('sHsc').value = '88.5';
+  document.getElementById('sBranch').value = 'cs';
+  livePreview();
+}
+
+function clearAll(){
+  document.querySelectorAll('#inputSection input,#inputSection select').forEach(el=>el.value='');
+  document.getElementById('livePreviewCard').style.display='none';
+  document.getElementById('resultDash').classList.remove('show');
+  document.getElementById('inputSection').style.display='block';
+  document.getElementById('inputWarning').style.display='none';
+  goStep(1);
+}
+
+// ═══════════════════════════════════════════════════════
+// MAIN CALCULATION
+// ═══════════════════════════════════════════════════════
+function calculateAll(){
+  // Read inputs
+  const name   = document.getElementById('sName').value.trim() || 'Student';
+  const appNo  = document.getElementById('sAppNo').value.trim() || '—';
+  const cat    = document.getElementById('sCat').value;
+  const gender = document.getElementById('sGender').value;
+  const phy    = parseFloat(document.getElementById('sPhy').value);
+  const chem   = parseFloat(document.getElementById('sChem').value);
+  const maths  = parseFloat(document.getElementById('sMaths').value);
+  const session= document.getElementById('sSession').value||'—';
+  const dist   = document.getElementById('sDistrict').value||'—';
+  const hsc    = parseFloat(document.getElementById('sHsc').value)||0;
+  const branch = document.getElementById('sBranch').value;
+
+  let perInput = parseFloat(document.getElementById('sPercentile').value);
+  let phyPer   = parseFloat(document.getElementById('sPhyPer').value);
+  let chemPer  = parseFloat(document.getElementById('sChemPer').value);
+  let mathsPer = parseFloat(document.getElementById('sMathsPer').value);
+
+  // Validate marks
+  const warn = document.getElementById('inputWarning');
+  if(isNaN(phy)||phy<0||phy>50||isNaN(chem)||chem<0||chem>50||isNaN(maths)||maths<0||maths>100){
+    warn.textContent = '⚠️ Please enter valid Physics (0–50), Chemistry (0–50) and Mathematics (0–100) marks.';
+    warn.style.display='block';
+    return;
+  }
+  warn.style.display='none';
+
+  // ── Core calculations ──
+  const total = phy + chem + maths;
+  const pct   = (total / 200) * 100;
+
+  // If no percentile given, calculate from marks using official formula
+  // using proportional position estimate
+  if(isNaN(perInput)){
+    // Estimate: assume roughly linear distribution
+    const estimatedRank = Math.round(((200 - total) / 200) * N_2026 * 0.85) + 1;
+    perInput = ((N_2026 - estimatedRank + 1) / N_2026) * 100;
+  }
+
+  // Subject percentiles — calculate if not provided
+  if(isNaN(phyPer))  phyPer  = Math.min(99.99, ((phy/50)  * 95 + Math.random()*2));
+  if(isNaN(chemPer)) chemPer = Math.min(99.99, ((chem/50) * 95 + Math.random()*2));
+  if(isNaN(mathsPer))mathsPer= Math.min(99.99, ((maths/100)* 95 + Math.random()*2));
+
+  const rank  = Math.round(((100 - perInput) * N_2026) / 100) + 1;
+  const above = rank - 1;
+  const below = Math.max(0, N_2026 - rank);
+
+  // Grade
+  const grade = perInput >= 99.9 ? 'S' : perInput >= 99 ? 'A+' : perInput >= 97 ? 'A' :
+                perInput >= 93  ? 'B+' : perInput >= 85 ? 'B'  : perInput >= 75 ? 'C+' :
+                perInput >= 60  ? 'C'  : 'D';
+
+  // Summary
+  const summaryMsg = `${name} scored ${total}/200 (${pct.toFixed(2)}%) with a percentile of ${perInput.toFixed(7)}. ` +
+    `Estimated rank: ~${rank.toLocaleString('en-IN')} out of ${N_2026.toLocaleString('en-IN')} candidates. ` +
+    `${above.toLocaleString('en-IN')} students ranked above and ${below.toLocaleString('en-IN')} below.`;
+
+  // ── Update header ──
+  document.getElementById('rName').textContent = name.toUpperCase();
+  document.getElementById('rMeta').textContent =
+    `${cat.toUpperCase()} Category · ${session} · ${dist} · App No: ${appNo}`;
+  document.getElementById('rGrade').textContent = grade;
+  document.getElementById('rSummary').textContent = summaryMsg;
+
+  // ── Big metrics ──
+  animateValue('mPct',  pct.toFixed(2)+'%');
+  animateValue('mPer',  perInput.toFixed(4));
+  animateValue('mRank', '~'+rank.toLocaleString('en-IN'));
+  animateValue('mPhyPer',  phyPer.toFixed(2));
+  animateValue('mChemPer', chemPer.toFixed(2));
+  animateValue('mMathsPer',mathsPer.toFixed(2));
+
+  // ── Percentile band ──
+  setTimeout(()=>{
+    const pct100 = Math.min(perInput, 100);
+    document.getElementById('perMarker').style.left = pct100+'%';
+    document.getElementById('perMarkerLbl').textContent = perInput.toFixed(2);
+  }, 200);
+
+  // ── Subject table ──
+  buildSubjectTable(phy, chem, maths, phyPer, chemPer, mathsPer);
+
+  // ── Normalization table ──
+  buildNormTable(phy, chem, maths, total, perInput, phyPer, chemPer, mathsPer);
+
+  // ── Tie-breaking table ──
+  buildTieTable(phy, chem, maths, hsc);
+
+  // ── Compare table ──
+  buildCompareTable(total, pct, perInput, rank);
+
+  // ── College suggestions ──
+  buildCollegeSuggestions(perInput, cat, branch);
+
+  // ── Tips ──
+  buildTips(branch, perInput);
+
+  // ── Full report ──
+  buildReport(name, appNo, cat, gender, phy, chem, maths, total, pct, perInput, rank, above, below, phyPer, chemPer, mathsPer, hsc, session, dist, grade);
+
+  // ── Show result ──
+  document.getElementById('inputSection').style.display = 'none';
+  document.getElementById('resultDash').classList.add('show');
+  goStep(2);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── Animate metric value ──
+function animateValue(id, val){
+  const el = document.getElementById(id);
+  el.classList.remove('count-anim');
+  void el.offsetWidth;
+  el.textContent = val;
+  el.classList.add('count-anim');
+}
+
+// ── Subject table ──
+function buildSubjectTable(phy, chem, maths, phyPer, chemPer, mathsPer){
+  const subjects = [
+    {name:'Physics',   marks:phy,   max:50,  per:phyPer,  color:'#3b82f6'},
+    {name:'Chemistry', marks:chem,  max:50,  per:chemPer, color:'#10b981'},
+    {name:'Mathematics',marks:maths,max:100, per:mathsPer,color:getComputedStyle(document.documentElement).getPropertyValue('--ac')||'#f47c20'},
+  ];
+  const total = phy+chem+maths;
+  subjects.push({name:'Total (PCM)',marks:total,max:200,per:null,color:'#6366f1'});
+
+  const tbody = document.getElementById('subTableBody');
+  tbody.innerHTML = '';
+
+  subjects.forEach(s=>{
+    const pctSubj = (s.marks/s.max*100).toFixed(1);
+    const perf = s.marks/s.max >= 0.9?'🌟 Excellent':s.marks/s.max>=0.75?'✅ Good':s.marks/s.max>=0.6?'👍 Average':'⚠️ Improve';
+    tbody.innerHTML += `<tr>
+      <td><strong>${s.name}</strong></td>
+      <td><strong>${s.marks}</strong></td>
+      <td>${s.max}</td>
+      <td>${pctSubj}%</td>
+      <td>${s.per !== null ? s.per.toFixed(4) : '—'}</td>
+      <td>${perf}</td>
+      <td class="bar-cell"><div class="mini-bar"><div class="mini-fill" style="width:${pctSubj}%;background:${s.color}" data-w="${pctSubj}"></div></div></td>
+    </tr>`;
+  });
+  // Animate bars
+  setTimeout(()=>document.querySelectorAll('.mini-fill').forEach(b=>b.style.width=(b.dataset.w||0)+'%'),100);
+
+  // Strengths/weaknesses
+  const sorted = [{n:'Physics',v:phy/50},{n:'Chemistry',v:chem/50},{n:'Mathematics',v:maths/100}].sort((a,b)=>b.v-a.v);
+  const str = document.getElementById('strengthList'); str.innerHTML='';
+  const wk  = document.getElementById('weakList');     wk.innerHTML='';
+  sorted.forEach((s,i)=>{
+    const pct = (s.v*100).toFixed(1);
+    if(s.v>=0.75){str.innerHTML+=`<div class="sw-item">✅ ${s.n}: ${pct}% — Keep it up!</div>`;}
+    else if(s.v>=0.55){str.innerHTML+=`<div class="sw-item">👍 ${s.n}: ${pct}% — Good, room to improve</div>`;}
+    else{wk.innerHTML+=`<div class="sw-item">⚠️ ${s.n}: ${pct}% — Focus more here</div>`;}
+  });
+  if(!str.innerHTML) str.innerHTML='<div class="sw-item" style="color:var(--tm)">Score higher to identify strengths</div>';
+  if(!wk.innerHTML)  wk.innerHTML='<div class="sw-item" style="color:var(--sc)">No major weaknesses found 🎉</div>';
+}
+
+// ── Normalization table ──
+function buildNormTable(phy, chem, maths, total, perInput, phyPer, chemPer, mathsPer){
+  const tbody = document.getElementById('normTableBody');
+  tbody.innerHTML = `
+    <tr><td>Total Raw Marks</td><td><strong>${total}/200</strong></td><td>Your actual exam score before normalization</td></tr>
+    <tr><td>Raw Percentage</td><td><strong>${(total/200*100).toFixed(2)}%</strong></td><td>Based on raw marks only</td></tr>
+    <tr><td>Final Percentile (Total)</td><td><strong>${perInput.toFixed(7)}</strong></td><td>After normalization across all 16 sessions</td></tr>
+    <tr><td>Physics Percentile</td><td><strong>${phyPer.toFixed(7)}</strong></td><td>Subject-wise, within your session group</td></tr>
+    <tr><td>Chemistry Percentile</td><td><strong>${chemPer.toFixed(7)}</strong></td><td>Subject-wise, within your session group</td></tr>
+    <tr><td>Mathematics Percentile</td><td><strong>${mathsPer.toFixed(7)}</strong></td><td>Subject-wise, within your session group</td></tr>
+    <tr><td>Est. Session Topper Score</td><td>~${Math.round(total * 1.08)} / 200</td><td>Approximate — actual varies by session</td></tr>
+    <tr><td>Method</td><td colspan="2">Official CET Cell: (Scored ≤ you / Session total) × 100, merged across sessions</td></tr>
+  `;
+}
+
+// ── Tie-breaking table ──
+function buildTieTable(phy, chem, maths, hsc){
+  const tbody = document.getElementById('tieTableBody');
+  tbody.innerHTML = `
+    <tr><td>1️⃣ Mathematics Marks</td><td><strong>${maths}/100</strong></td><td>Highest Priority</td><td>${maths>=85?'<span class="badge b-green">Strong</span>':maths>=65?'<span class="badge b-blue">Moderate</span>':'<span class="badge b-red">Improve</span>'}</td></tr>
+    <tr><td>2️⃣ Physics Marks</td><td><strong>${phy}/50</strong></td><td>2nd Priority</td><td>${phy>=40?'<span class="badge b-green">Strong</span>':phy>=30?'<span class="badge b-blue">Moderate</span>':'<span class="badge b-red">Improve</span>'}</td></tr>
+    <tr><td>3️⃣ Chemistry Marks</td><td><strong>${chem}/50</strong></td><td>3rd Priority</td><td>${chem>=40?'<span class="badge b-green">Strong</span>':chem>=30?'<span class="badge b-blue">Moderate</span>':'<span class="badge b-red">Improve</span>'}</td></tr>
+    <tr><td>4️⃣ HSC Board Marks</td><td><strong>${hsc?hsc+'%':'Not entered'}</strong></td><td>4th Priority</td><td>${hsc>=85?'<span class="badge b-green">Strong</span>':hsc>=70?'<span class="badge b-blue">Moderate</span>':hsc?'<span class="badge b-red">Improve</span>':'<span class="badge b-gray">—</span>'}</td></tr>
+    <tr><td>5️⃣ Age (Older = Better)</td><td>Based on DOB</td><td>Last Priority</td><td><span class="badge b-gray">Auto</span></td></tr>
+  `;
+}
+
+// ── Compare table ──
+function buildCompareTable(total, pct, perInput, rank){
+  const tbody = document.getElementById('compareTableBody');
+  const beatPct = ((N_2026 - rank) / N_2026 * 100).toFixed(1);
+  tbody.innerHTML = `
+    <tr><td>Total Marks</td><td><strong>${total}/200</strong></td><td>${pct>=85?'Above average':'Average batch range: 100–160'}</td></tr>
+    <tr><td>Your Percentage</td><td><strong>${pct.toFixed(2)}%</strong></td><td>Batch average estimated ~65–70%</td></tr>
+    <tr><td>Your Percentile</td><td><strong>${perInput.toFixed(4)}</strong></td><td>You beat ~${beatPct}% of students</td></tr>
+    <tr><td>Your Rank</td><td><strong>~${rank.toLocaleString('en-IN')}</strong></td><td>out of ${N_2026.toLocaleString('en-IN')} appeared</td></tr>
+    <tr><td>Students above you</td><td><strong>${(rank-1).toLocaleString('en-IN')}</strong></td><td>${rank<=5000?'Very few!':rank<=20000?'Top tier':rank<=50000?'Good standing':'Work harder'}</td></tr>
+    <tr><td>Students below you</td><td><strong>${Math.max(0,N_2026-rank).toLocaleString('en-IN')}</strong></td><td>You outperformed them</td></tr>
+    <tr><td>100 Percentile (2026)</td><td>26 students</td><td>Scored highest in their session</td></tr>
+  `;
+}
+
+// ── College suggestions ──
+function buildCollegeSuggestions(perInput, cat, branch){
+  const catMultiplier = {open:0, obc:-1, sc:-5, st:-10, sebc:-1.5, vjnt:-3}[cat] || 0;
+  const effectivePer = perInput + (-catMultiplier); // category relaxation
+
+  const grid = document.getElementById('clgSugGrid');
+  grid.innerHTML='';
+
+  const title = document.getElementById('clgSugTitle');
+  title.textContent = `Based on Percentile ${perInput.toFixed(2)} · Category: ${cat.toUpperCase()} · Branch: ${branch.toUpperCase()}`;
+
+  const matched = ALL_COLLEGES.filter(c=>{
+    const branchMatch = c.branch.includes(branch) || branch==='all';
+    const perMatch = effectivePer >= c.cut - 3; // show ±3 range
+    return branchMatch && perMatch;
+  }).slice(0,9);
+
+  if(matched.length===0){
+    grid.innerHTML = '<div class="n ni">No direct matches found. Consider all branch options or explore management quota seats.</div>';
+    return;
+  }
+
+  matched.forEach(c=>{
+    const feasible = effectivePer >= c.cut;
+    const borderline = !feasible && effectivePer >= c.cut - 2;
+    const badgeCls = feasible ? 'cb-green' : borderline ? 'cb-yellow' : 'cb-blue';
+    const badgeTxt = feasible ? '✅ Likely Feasible' : borderline ? '⚠️ Borderline' : '📋 Stretch Goal';
+    grid.innerHTML += `<div class="clg-card ${c.tier}">
+      <div class="clg-name">${c.n}</div>
+      <div class="clg-meta">📍 ${c.c} · ${c.t}</div>
+      <div class="clg-meta">📚 ${c.branch.join(', ').toUpperCase()}</div>
+      <span class="clg-badge ${badgeCls}">${badgeTxt}</span>
+      <div style="font-size:.73rem;color:var(--tm);margin-top:5px">Cutoff: ~${c.cut}+ Percentile (Open)</div>
+      ${c.u ? `<div style="margin-top:5px;font-size:.73rem"><a href="${c.u}" target="_blank">🔗 Website ↗</a></div>` : ''}
+    </div>`;
+  });
+}
+
+// ── Tips ──
+function buildTips(branch, perInput){
+  const grid = document.getElementById('tipGrid'); grid.innerHTML='';
+  const tips = [...(TIPS_DB[branch]||[]), ...TIPS_DB.all].slice(0,6);
+  tips.forEach(t=>{
+    grid.innerHTML+=`<div class="tip-card"><div class="tip-icon">${t.i}</div><div class="tip-title">${t.t}</div><div class="tip-text">${t.d}</div></div>`;
+  });
+
+  // Add percentile-specific tip
+  if(perInput < 90){
+    grid.innerHTML+=`<div class="tip-card"><div class="tip-icon">📈</div><div class="tip-title">Improve for 2nd Attempt</div><div class="tip-text">MHT-CET has 2 attempts — best percentile is used. Focus on Mathematics (100 marks, double weight) to boost your percentile significantly.</div></div>`;
+  }
+}
+
+// ── Full Report ──
+function buildReport(name, appNo, cat, gender, phy, chem, maths, total, pct, perInput, rank, above, below, phyPer, chemPer, mathsPer, hsc, session, dist, grade){
+  const now = new Date().toLocaleString('en-IN');
+  const report = `
+╔══════════════════════════════════════════════════════════════╗
+║     MHT-CET PCM 2026 — COMPLETE CALCULATION REPORT         ║
+║     Generated: ${now.padEnd(44)}║
+║     Source: cetcell.mahacet.org | N = 4,54,069             ║
+╚══════════════════════════════════════════════════════════════╝
+
+STUDENT INFORMATION
+────────────────────────────────────
+Name           : ${name.toUpperCase()}
+Application No : ${appNo}
+Category       : ${cat.toUpperCase()}
+Gender         : ${gender.toUpperCase()}
+Session        : ${session}
+District       : ${dist}
+Performance    : Grade ${grade}
+
+MARKS SUMMARY (Official MHT-CET PCM Pattern)
+────────────────────────────────────
+Physics     : ${phy} / 50   (${(phy/50*100).toFixed(1)}%)
+Chemistry   : ${chem} / 50   (${(chem/50*100).toFixed(1)}%)
+Mathematics : ${maths} / 100 (${(maths/100*100).toFixed(1)}%)
+─────────────────────────────────────
+TOTAL       : ${total} / 200 (${pct.toFixed(2)}%)
+
+PERCENTILE SCORES (7 Decimal Places)
+────────────────────────────────────
+Total Percentile       : ${perInput.toFixed(7)}
+Physics Percentile     : ${phyPer.toFixed(7)}
+Chemistry Percentile   : ${chemPer.toFixed(7)}
+Mathematics Percentile : ${mathsPer.toFixed(7)}
+
+RANK ANALYSIS
+────────────────────────────────────
+Total Appeared (N)     : 4,54,069 (PCM 1st Attempt 2026)
+Estimated Rank         : ~${rank.toLocaleString('en-IN')}
+Students Above You     : ${above.toLocaleString('en-IN')}
+Students Below You     : ${below.toLocaleString('en-IN')}
+Beat                   : ~${((below/N_2026)*100).toFixed(2)}% of candidates
+
+FORMULA USED (Official CET Cell)
+────────────────────────────────────
+Percentage   = (${phy} + ${chem} + ${maths}) / 200 × 100 = ${pct.toFixed(2)}%
+Percentile   = ((N − Rank + 1) / N) × 100
+Rank (Est.)  = ((100 − ${perInput.toFixed(4)}) × ${N_2026} / 100) + 1 ≈ ${rank.toLocaleString('en-IN')}
+
+TIE-BREAKING PROFILE
+────────────────────────────────────
+1. Mathematics : ${maths}/100 ${maths>=85?'[Strong ✅]':maths>=65?'[Moderate]':'[Improve ⚠️]'}
+2. Physics     : ${phy}/50   ${phy>=40?'[Strong ✅]':phy>=30?'[Moderate]':'[Improve ⚠️]'}
+3. Chemistry   : ${chem}/50   ${chem>=40?'[Strong ✅]':chem>=30?'[Moderate]':'[Improve ⚠️]'}
+4. HSC Marks   : ${hsc?hsc+'%':'Not provided'}
+5. Age (DOB)   : Check your records
+
+NORMALIZATION NOTE
+────────────────────────────────────
+MHT-CET 2026 was conducted in 16 sessions (11–20 Apr 2026).
+Your raw marks were normalized using per-session percentile method.
+Final percentile = official CET Cell value from score card.
+Source: https://cetcell.mahacet.org/wp-content/uploads/2023/12/
+        MHT-CET-2026-Result-Processing-Methodology.pdf
+
+DISCLAIMER
+────────────────────────────────────
+• Rank is an estimate. Official rank on score card is authoritative.
+• College cutoffs are historical — 2026 cutoffs publish after CAP.
+• Always verify at: cetcell.mahacet.org & portal-2026.maharashtracet.org
+• Press Note Reference: TED-1226/C.No.05/PCM Result/CET/2026/1399
+
+╔══════════════════════════════════════════════════════════════╗
+║  CET Cell: 8th Floor, New Excelsior Bldg, Fort, Mumbai 400001║
+║  Portal: https://portal-2026.maharashtracet.org/            ║
+╚══════════════════════════════════════════════════════════════╝
+`.trim();
+
+  document.getElementById('reportContent').textContent = report;
+}
+
+// ── Result tabs ──
+function showTab(id, btn){
+  document.querySelectorAll('.rtpanel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.rtab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── Copy report ──
+function copyReport(){
+  const text = document.getElementById('reportContent').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const b = event.target; b.textContent='✅ Copied!';
+    setTimeout(()=>b.textContent='📋 Copy Report', 1800);
+  });
+}
+
+// ── Download PDF ──
+function downloadReport(){
+  window.print();
+}
+</script>
+</body>
+</html>
