@@ -458,7 +458,7 @@ footer p+p{margin-top:5px}
     <div class="cs">Enter your proxy server URL. On localhost use the default. On Vercel use your deployment URL.</div>
     <div class="fg">
       <label>Proxy Server URL</label>
-      <input type="text" id="proxyUrl" value="/api/chat" placeholder="https://your-app.vercel.app/api/chat">
+      <input type="text" id="proxyUrl" value="/api/chat" placeholder="https://mhtcet-live-dashboard-t6yh.vercel.app/api/chat">
     </div>
     <div class="abar">
       <button class="btn bp" id="fetchBtn" onclick="fetchLiveUpdates()">🔄 Fetch Latest from CET Cell</button>
@@ -1252,7 +1252,11 @@ async function fetchLiveUpdates(){
 
   try{
     const res=await fetch(proxyUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'live_updates'})});
-    if(!res.ok)throw new Error(`Server returned ${res.status}. Check your proxy URL.`);
+    if(!res.ok){
+      let msg=`Server returned ${res.status}.`;
+      try{const e=await res.json();if(e.hint)msg+=' '+e.hint;else if(e.detail?.includes('invalid x-api-key'))msg+=' Invalid Anthropic API key — check ANTHROPIC_API_KEY on Vercel and redeploy.';else if(e.error)msg+=' '+e.error;}catch(_){}
+      throw new Error(msg);
+    }
     const data=await res.json();
     const txt=data.result||'';
     // Parse JSON from response
