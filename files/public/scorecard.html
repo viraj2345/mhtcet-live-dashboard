@@ -1066,6 +1066,15 @@ function copyReport(){
 function downloadReport(){
   window.print();
 }
+
+// Auto-fill sample scorecard when opened with ?demo=1
+(function(){
+  const q=new URLSearchParams(location.search);
+  if(q.get('demo')==='1'||q.get('sample')==='1'){
+    loadSampleData();
+    setTimeout(()=>calculateAll(),400);
+  }
+})();
 </script>
 </body>
 </html>

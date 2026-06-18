@@ -359,7 +359,7 @@ footer p+p{margin-top:5px}
       <button class="nt" onclick="pg('dates',this)">📅 Dates</button>
       <button class="nt" onclick="pg('stats',this)">📋 Stats 2026</button>
       <button class="nt" onclick="pg('chatbot',this)">🤖 Ask AI</button>
-      <a href="scorecard.html" class="nt" style="text-decoration:none;color:rgba(255,255,255,.7)" target="_blank">📋 Scorecard Calc</a>
+      <a href="scorecard.html?demo=1" class="nt" style="text-decoration:none;color:rgba(255,255,255,.7)" target="_blank">📋 Scorecard Calc</a>
       <button class="nt" onclick="pg('marathi',this)">मराठी</button>
       <button class="nt" onclick="pg('quickref',this)">⚡ Quick Ref</button>
     </div>
@@ -450,7 +450,7 @@ footer p+p{margin-top:5px}
 <div class="page" id="page-live">
   <div class="sh"><div class="snum">🔴</div><div><div class="stit">Live CET Cell Updates</div><div class="ssub">AI fetches cetcell.mahacet.org in real time — no stale data</div></div></div>
 
-  <div class="n ni">🤖 <strong>How this works:</strong> Clicking "Fetch Now" sends a request to your proxy server → Claude AI visits cetcell.mahacet.org → extracts latest notifications → displayed here. Data is fresh every time you click.</div>
+  <div class="n ni">🤖 <strong>How this works:</strong> Click "Fetch Now" — your server reads cetcell.mahacet.org directly and shows the latest notifications with download links. No API key needed.</div>
 
   <!-- API Config -->
   <div class="card accent" id="apiConfigCard">
@@ -475,6 +475,10 @@ footer p+p{margin-top:5px}
       <button class="btn bg2 sm" onclick="fetchLiveUpdates()">🔄 Refresh</button>
     </div>
     <ul class="notif-list" id="notifList"></ul>
+    <table class="tbl" id="notifTable" style="margin-top:14px;display:none">
+      <thead><tr><th>Date</th><th>Course</th><th>Notification</th><th>Download</th></tr></thead>
+      <tbody id="notifTableBody"></tbody>
+    </table>
   </div>
 
   <!-- Announcements -->
@@ -492,7 +496,7 @@ footer p+p{margin-top:5px}
   <!-- Loading state -->
   <div id="liveLoader" style="display:none;text-align:center;padding:40px">
     <div class="loader dark"></div>
-    <p style="margin-top:14px;color:var(--tm);font-size:.85rem">Fetching latest data from cetcell.mahacet.org…<br><small>Claude AI is reading the CET Cell website right now</small></p>
+    <p style="margin-top:14px;color:var(--tm);font-size:.85rem">Fetching latest data from cetcell.mahacet.org…</p>
   </div>
 
   <!-- Error state -->
@@ -1266,11 +1270,19 @@ async function fetchLiveUpdates(){
 
     // Populate notifications
     const list=document.getElementById('notifList');list.innerHTML='';
+    const tbody=document.getElementById('notifTableBody');tbody.innerHTML='';
+    const notifTable=document.getElementById('notifTable');
     (d.latestNotifications||[]).forEach(n=>{
+      const isPdf=(n.url||'').includes('.pdf');
+      const dlLabel=isPdf?'📥 Download PDF':'🔗 Open Portal';
       const li=document.createElement('li');li.className='notif-item';
-      li.innerHTML=`<span class="notif-date">${n.date||''}</span><span>${n.title||n.course||'Update'} ${n.url?`<a href="${n.url}" target="_blank">↗</a>`:''}</span>`;
+      li.innerHTML=`<span class="notif-date">${n.date||''}</span><span><strong>${n.course||'CET'}</strong> — ${n.title||''} ${n.url?`<a href="${n.url}" target="_blank" rel="noopener">${dlLabel}</a>`:''}</span>`;
       list.appendChild(li);
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>${n.date||''}</td><td>${n.course||'—'}</td><td>${n.title||''}</td><td>${n.url?`<a href="${n.url}" target="_blank" rel="noopener">${dlLabel}</a>`:'—'}</td>`;
+      tbody.appendChild(tr);
     });
+    notifTable.style.display=(d.latestNotifications||[]).length?'table':'none';
 
     // Announcements
     const aList=document.getElementById('announceList');aList.innerHTML='';
